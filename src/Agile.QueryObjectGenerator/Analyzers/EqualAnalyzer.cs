@@ -16,10 +16,13 @@ namespace Agile.QueryObjectGenerator.Analyzers
 			//{
 			//	  source = source.Where(o=>o.Id == Id);
 			//}
+			var navigation = new List<string>(context.Navigations) {propertyName};
 			var builder = new StringBuilder();
-			builder.AppendLineFormat("if({0} != null)", propertyName)
+			builder.AppendLineFormat("if({0}.{1} != null)", context.QueryParamName, propertyName)
 			       .AppendLine("{")
-			       .AppendLineFormat("{0} = {0}.Where(o=>o.{1} == {1});", context.SourceParamName, propertyName)
+			       .AppendLineFormat("{0} = {0}.Where(o=>o.{1} == {2}.{3});", context.SourceParamName,
+			                         string.Join(".", navigation),
+			                         context.QueryParamName, propertyName)
 			       .AppendLine("}");
 			return builder.ToString();
 		}

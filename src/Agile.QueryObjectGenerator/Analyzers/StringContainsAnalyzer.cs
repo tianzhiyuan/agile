@@ -18,10 +18,11 @@ namespace Agile.QueryObjectGenerator.Analyzers
 		{
 			var queryPropertyName = context.QueryProperty.Name;
 			var modelPropertyName = context.ModelProperty.Name;
+			var navigation = new List<string>(context.Navigations) { modelPropertyName };
 			var builder = new StringBuilder();
-			builder.AppendLineFormat("if({0} != null)", queryPropertyName)
+			builder.AppendLineFormat("if({0} != null)", context.QueryParamName + "." + queryPropertyName)
 			       .AppendLine("{")
-			       .AppendLineFormat("{0}={0}.Where(o=>o.{1}.Contains({2}));", context.SourceParamName, modelPropertyName, queryPropertyName)
+				   .AppendLineFormat("{0}={0}.Where(o=>o.{1}.Contains({2}));", context.SourceParamName, string.Join(".", navigation), context.QueryParamName + "." + queryPropertyName)
 			       .AppendLine("}");
 			return builder.ToString();
 		}

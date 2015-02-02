@@ -14,12 +14,54 @@ namespace Agile.Framework.Data
 	{
 		public EfDataService()
         {
-            Handlers = new Dictionary<Type, Delegate>();
+            
         }
 
-        public Dictionary<Type, Delegate> Handlers { get; set; }
         private readonly object _contextCreatorLocker = new object();
         private Func<string, DbContext> _createContext;
+		protected DbContext GetContext()
+		{
+			Func<string, DbContext> handler = _createContext;
+			if (handler == null)
+			{
+				lock (_contextCreatorLocker)
+				{
+					if (_createContext == null)
+					{
+						var type = Type.GetType(ContextTypeString);
+						if (type == null) throw new ArgumentNullException("ContextTypeString");
+
+						var constructors = type.GetConstructors();
+						var arg = Expression.Parameter(typeof(string));
+						var predicateMethod = typeof(string).GetMethod("IsNullOrWhiteSpace");
+						handler = _createContext = Expression.Lambda<Func<string, DbContext>>(
+							Expression.Condition(
+								Expression.Call(predicateMethod, arg),
+								Expression.New(constructors.First(o => o.GetParameters().Length == 0)),
+								Expression.New(constructors.First(o => o.GetParameters().Length == 1), arg)
+							),
+							arg
+						).Compile();
+					}
+					else
+					{
+						handler = _createContext;
+					}
+				}
+			}
+
+			var db = handler(NameOrConnectionString);
+			db.Configuration.AutoDetectChangesEnabled = false;
+			db.Configuration.ProxyCreationEnabled = false;
+			return db;
+		}
+
+		public event EventHandler<DataServiceEventArgs> BeforeUpdate;
+		public event EventHandler<DataServiceEventArgs> AfterUpdate;
+		public event EventHandler<DataServiceEventArgs> BeforeDelete;
+		public event EventHandler<DataServiceEventArgs> AfterDelete;
+		public event EventHandler<DataServiceEventArgs> BeforeCreate;
+		public event EventHandler<DataServiceEventArgs> AfterCreate;
         public void Update<TModel>(params TModel[] models) where TModel : BaseEntity, new()
         {
             if (BeforeUpdate != null)
@@ -102,15 +144,6 @@ namespace Agile.Framework.Data
             }
         }
 
-
-
-        public event EventHandler<DataServiceEventArgs> BeforeUpdate;
-        public event EventHandler<DataServiceEventArgs> AfterUpdate;
-        public event EventHandler<DataServiceEventArgs> BeforeDelete;
-        public event EventHandler<DataServiceEventArgs> AfterDelete;
-        public event EventHandler<DataServiceEventArgs> BeforeCreate;
-        public event EventHandler<DataServiceEventArgs> AfterCreate;
-
 		public void Delete<TModel>(params TModel[] models) where TModel : BaseEntity, new()
         {
             if (BeforeDelete != null)
@@ -152,44 +185,6 @@ namespace Agile.Framework.Data
 
         public string NameOrConnectionString { get; set; }
         public string ContextTypeString { get; set; }
-
-        protected DbContext GetContext()
-        {
-            Func<string, DbContext> handler = _createContext;
-            if (handler == null)
-            {
-                lock (_contextCreatorLocker)
-                {
-                    if (_createContext == null)
-                    {
-                        var type = Type.GetType(ContextTypeString);
-                        if (type == null) throw new ArgumentNullException("ContextTypeString");
-
-                        var constructors = type.GetConstructors();
-                        var arg = Expression.Parameter(typeof(string));
-                        var predicateMethod = typeof(string).GetMethod("IsNullOrWhiteSpace");
-                        handler = _createContext = Expression.Lambda<Func<string, DbContext>>(
-                            Expression.Condition(
-                                Expression.Call(predicateMethod, arg),
-                                Expression.New(constructors.First(o => o.GetParameters().Length == 0)),
-                                Expression.New(constructors.First(o => o.GetParameters().Length == 1), arg)
-                            ),
-                            arg
-                        ).Compile();
-                    }
-                    else
-                    {
-                        handler = _createContext;
-                    }
-                }
-            }
-
-            var db = handler(NameOrConnectionString);
-            db.Configuration.AutoDetectChangesEnabled = false;
-            db.Configuration.ProxyCreationEnabled = false;
-            return db;
-        }
-
         public IEnumerable<TModel> SqlQuery<TModel>(string query, params object[] parameters) where TModel : class
         {
             using (var db = GetContext())

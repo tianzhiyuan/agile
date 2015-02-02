@@ -19,20 +19,21 @@ namespace Agile.QueryObjectGenerator.Analyzers
 		{
 			var queryPropertyName = context.QueryProperty.Name;
 			var modelPropertyName = context.ModelProperty.Name;
+			var navigation = new List<string>(context.Navigations) { modelPropertyName };
 			var builder = new StringBuilder();
 			var modelPropertyType = context.ModelProperty.PropertyType;
 
-			builder.AppendLineFormat("if({0} != null)", queryPropertyName)
+			builder.AppendLineFormat("if({0}.{1} != null)", context.QueryParamName, queryPropertyName)
 			       .AppendLine("{");
 			if (modelPropertyType.IsGenericType)
 			{
-				builder.AppendLineFormat("{0} = {0}.Where(o=>{1}.Contains(o.{2}.Value));", context.SourceParamName, queryPropertyName,
-				                         modelPropertyName);
+				builder.AppendLineFormat("{0} = {0}.Where(o=>{3}.{1}.Contains(o.{2}.Value));", context.SourceParamName, queryPropertyName,
+				                         string.Join(".", navigation), context.QueryParamName);
 			}
 			else
 			{
-				builder.AppendLineFormat("{0} = {0}.Where(o=>{1}.Contains(o.{2}));", context.SourceParamName, queryPropertyName,
-				                         modelPropertyName);
+				builder.AppendLineFormat("{0} = {0}.Where(o=>{3}.{1}.Contains(o.{2}));", context.SourceParamName, queryPropertyName,
+										 string.Join(".", navigation), context.QueryParamName);
 			}
 			       
 			builder.AppendLine("}");

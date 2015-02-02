@@ -15,16 +15,17 @@ namespace Agile.QueryObjectGenerator.Analyzers
 		{
 			var queryPropertyName = context.QueryProperty.Name;
 			var modelPropertyName = context.ModelProperty.Name;
+			var navigation = new List<string>(context.Navigations) { modelPropertyName };
 			var builder = new StringBuilder();
-			builder.AppendLineFormat("if({0} != null)", queryPropertyName)
+			builder.AppendLineFormat("if({0}.{1} != null)",context.QueryParamName, queryPropertyName)
 			       .AppendLine("{")
-			       .AppendLineFormat("if({0}.Left != null)", queryPropertyName)
+			       .AppendLineFormat("if({0}.{1}.Left != null)", context.QueryParamName, queryPropertyName)
 			       .AppendLine("{")
-			       .AppendLineFormat("{0}={1}.LeftOpen?{0}.Where(o=>o.{2}>{1}.Left):{0}.Where(o=>o.{2}>={1}.Left);", context.SourceParamName, queryPropertyName, modelPropertyName)
+			       .AppendLineFormat("{0}={1}.LeftOpen?{0}.Where(o=>o.{2}>{1}.Left):{0}.Where(o=>o.{2}>={1}.Left);", context.SourceParamName, context.QueryParamName+"."+queryPropertyName, string.Join(".", navigation))
 			       .AppendLine("}")
-			       .AppendLineFormat("if({0}.Right != null)", queryPropertyName)
+				   .AppendLineFormat("if({0}.Right != null)", context.QueryParamName + "." + queryPropertyName)
 			       .AppendLine("{")
-				   .AppendLineFormat("{0}={1}.RightOpen?{0}.Where(o=>o.{2}<{1}.Right):{0}.Where(o=>o.{2}<={1}.Right);", context.SourceParamName, queryPropertyName, modelPropertyName)
+				   .AppendLineFormat("{0}={1}.RightOpen?{0}.Where(o=>o.{2}<{1}.Right):{0}.Where(o=>o.{2}<={1}.Right);", context.SourceParamName, context.QueryParamName + "." + queryPropertyName, string.Join(".", navigation))
 			       .AppendLine("}")
 			       .AppendLine("}");
 			return builder.ToString();

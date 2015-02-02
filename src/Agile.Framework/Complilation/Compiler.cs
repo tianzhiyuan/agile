@@ -545,6 +545,10 @@ namespace Agile.Framework.Complilation
              *              if(naviQuery.Id != null){
              *                  source = source.Where(t=>t.User.Id == naviQuery.Id);
              *              }
+			 *              if(naviQuery.RoleQuery != null){
+			 *					var naviQuery_2 = naviQuery.RoleQuery;
+			 *					
+			 *              }
              *          }
              *      ｝
              */

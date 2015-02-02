@@ -5,11 +5,9 @@ namespace Agile.Common.Data
     [Serializable]
     public abstract class BaseEntity
     {
-        public int? Id { get; set; }
-        public int? CreatorId { get; set; }
-        public int? LastModifierId { get; set; }
-        public DateTime? CreatedAt { get; set; }
-        public DateTime? LastModifiedAt { get; set; }
+        public int Id { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public DateTime LastModifiedAt { get; set; }
 
 		private static bool IsTransient(BaseEntity obj)
 		{
@@ -53,7 +51,7 @@ namespace Agile.Common.Data
 
 		public static bool operator !=(BaseEntity x, BaseEntity y)
 		{
-			return !(x == y);
+			return !Equals(x, y);
 		}
     }
     

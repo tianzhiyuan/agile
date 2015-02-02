@@ -55,6 +55,7 @@
     </ApplicationDefinition>
     <Compile Include="Analyzers\EqualAnalyzer.cs" />
     <Compile Include="Analyzers\ListContainsAnalyzer.cs" />
+    <Compile Include="Analyzers\NavigationAnalyzer.cs" />
     <Compile Include="Analyzers\PaginationAnalyzer.cs" />
     <Compile Include="Analyzers\RangeAnalyzer.cs" />
     <Compile Include="Analyzers\StringContainsAnalyzer.cs" />

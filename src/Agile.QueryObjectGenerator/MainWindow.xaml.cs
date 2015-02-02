@@ -50,60 +50,84 @@ namespace Agile.QueryObjectGenerator
 	}
 	public class Foo : BaseEntity
 	{
-
+		public Bar Bar { get; set; }
 	}
+
 	public class FooQuery : BaseEntityQuery<Foo>
 	{
+		public BarQuery BarQuery { get; set; }
+
+		#region override
 		public override IQueryable<Foo> DoQuery(IQueryable<Foo> source)
 		{
-			if (Id != null)
+			if (this.Id != null)
 			{
-				source = source.Where(o => o.Id == Id);
+				source = source.Where(o => o.Id == this.Id);
 			}
-			if (IdList != null)
+			if (this.IdList != null)
 			{
-				source = source.Where(o => IdList.Contains(o.Id.Value));
+				source = source.Where(o => this.IdList.Contains(o.Id));
 			}
-			if (CreatorIdList != null)
+			if (this.CreatedAtRange != null)
 			{
-				source = source.Where(o => CreatorIdList.Contains(o.CreatorId.Value));
-			}
-			if (LastModifierIdList != null)
-			{
-				source = source.Where(o => LastModifierIdList.Contains(o.LastModifierId.Value));
-			}
-			if (CreatedAtRange != null)
-			{
-				if (CreatedAtRange.Left != null)
+				if (this.CreatedAtRange.Left != null)
 				{
-					source = CreatedAtRange.LeftOpen ? source.Where(o => o.CreatedAt > CreatedAtRange.Left) : source.Where(o => o.CreatedAt >= CreatedAtRange.Left);
+					source = this.CreatedAtRange.LeftOpen ? source.Where(o => o.CreatedAt > this.CreatedAtRange.Left) : source.Where(o => o.CreatedAt >= this.CreatedAtRange.Left);
 				}
-				if (CreatedAtRange.Right != null)
+				if (this.CreatedAtRange.Right != null)
 				{
-					source = CreatedAtRange.RightOpen ? source.Where(o => o.CreatedAt < CreatedAtRange.Right) : source.Where(o => o.CreatedAt <= CreatedAtRange.Right);
+					source = this.CreatedAtRange.RightOpen ? source.Where(o => o.CreatedAt < this.CreatedAtRange.Right) : source.Where(o => o.CreatedAt <= this.CreatedAtRange.Right);
 				}
 			}
-			if (LastModifiedAtRange != null)
+			if (this.LastModifiedAtRange != null)
 			{
-				if (LastModifiedAtRange.Left != null)
+				if (this.LastModifiedAtRange.Left != null)
 				{
-					source = LastModifiedAtRange.LeftOpen ? source.Where(o => o.LastModifiedAt > LastModifiedAtRange.Left) : source.Where(o => o.LastModifiedAt >= LastModifiedAtRange.Left);
+					source = this.LastModifiedAtRange.LeftOpen ? source.Where(o => o.LastModifiedAt > this.LastModifiedAtRange.Left) : source.Where(o => o.LastModifiedAt >= this.LastModifiedAtRange.Left);
 				}
-				if (LastModifiedAtRange.Right != null)
+				if (this.LastModifiedAtRange.Right != null)
 				{
-					source = LastModifiedAtRange.RightOpen ? source.Where(o => o.LastModifiedAt < LastModifiedAtRange.Right) : source.Where(o => o.LastModifiedAt <= LastModifiedAtRange.Right);
+					source = this.LastModifiedAtRange.RightOpen ? source.Where(o => o.LastModifiedAt < this.LastModifiedAtRange.Right) : source.Where(o => o.LastModifiedAt <= this.LastModifiedAtRange.Right);
+				}
+			}
+			if (this.BarQuery != null)
+			{
+				var naviQuery_1 = this.BarQuery;
+				if (naviQuery_1.Id != null)
+				{
+					source = source.Where(o => o.Bar.Id == naviQuery_1.Id);
+				}
+				if (naviQuery_1.IdList != null)
+				{
+					source = source.Where(o => naviQuery_1.IdList.Contains(o.Bar.Id));
+				}
+				if (naviQuery_1.CreatedAtRange != null)
+				{
+					if (naviQuery_1.CreatedAtRange.Left != null)
+					{
+						source = naviQuery_1.CreatedAtRange.LeftOpen ? source.Where(o => o.Bar.CreatedAt > naviQuery_1.CreatedAtRange.Left) : source.Where(o => o.Bar.CreatedAt >= naviQuery_1.CreatedAtRange.Left);
+					}
+					if (naviQuery_1.CreatedAtRange.Right != null)
+					{
+						source = naviQuery_1.CreatedAtRange.RightOpen ? source.Where(o => o.Bar.CreatedAt < naviQuery_1.CreatedAtRange.Right) : source.Where(o => o.Bar.CreatedAt <= naviQuery_1.CreatedAtRange.Right);
+					}
+				}
+				if (naviQuery_1.LastModifiedAtRange != null)
+				{
+					if (naviQuery_1.LastModifiedAtRange.Left != null)
+					{
+						source = naviQuery_1.LastModifiedAtRange.LeftOpen ? source.Where(o => o.Bar.LastModifiedAt > naviQuery_1.LastModifiedAtRange.Left) : source.Where(o => o.Bar.LastModifiedAt >= naviQuery_1.LastModifiedAtRange.Left);
+					}
+					if (naviQuery_1.LastModifiedAtRange.Right != null)
+					{
+						source = naviQuery_1.LastModifiedAtRange.RightOpen ? source.Where(o => o.Bar.LastModifiedAt < naviQuery_1.LastModifiedAtRange.Right) : source.Where(o => o.Bar.LastModifiedAt <= naviQuery_1.LastModifiedAtRange.Right);
+					}
 				}
 			}
 			switch (OrderField)
 			{
 				case "Id":
 					source = (OrderDirection == Agile.Common.Data.OrderDirection.ASC) ? source.OrderBy(o => o.Id) : source.OrderByDescending(o => o.Id);
-					break;
-				case "CreatorId":
-					source = (OrderDirection == Agile.Common.Data.OrderDirection.ASC) ? source.OrderBy(o => o.CreatorId) : source.OrderByDescending(o => o.CreatorId);
-					break;
-				case "LastModifierId":
-					source = (OrderDirection == Agile.Common.Data.OrderDirection.ASC) ? source.OrderBy(o => o.LastModifierId) : source.OrderByDescending(o => o.LastModifierId);
 					break;
 				case "CreatedAt":
 					source = (OrderDirection == Agile.Common.Data.OrderDirection.ASC) ? source.OrderBy(o => o.CreatedAt) : source.OrderByDescending(o => o.CreatedAt);
@@ -116,9 +140,18 @@ namespace Agile.QueryObjectGenerator
 					break;
 			}
 			return source;
-
-
-
 		}
+		#endregion
+
+
+	}
+
+	public class Bar:BaseEntity
+	{
+		public Foo Foo { get; set; }
+	}
+	public class BarQuery:BaseEntityQuery<Bar>
+	{
+		public FooQuery FooQuery { get; set; }
 	}
 }
