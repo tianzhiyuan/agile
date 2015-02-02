@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Validation;
 using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
@@ -25,17 +26,32 @@ namespace Agile.Framework.Data
             {
                 BeforeUpdate.Invoke(this, new DataServiceEventArgs() { Items = models });
             }
-            using (var db = GetContext())
-            {
-                foreach (var model in models)
-                {
-                    var clone = ObjectUtils.Clone(model);
-                    var entry = db.Entry<TModel>(clone);
-                    entry.State = EntityState.Modified;
-                }
-                int rowsAffected = db.SaveChanges();
-                Debug.Assert(rowsAffected > 0);
-            }
+			try
+			{
+				using (var db = GetContext())
+				{
+					foreach (var model in models)
+					{
+						var clone = ObjectUtils.Clone(model);
+						var entry = db.Entry<TModel>(clone);
+						entry.State = EntityState.Modified;
+					}
+					int rowsAffected = db.SaveChanges();
+					Debug.Assert(rowsAffected > 0);
+				}
+			}
+			catch (DbEntityValidationException dbEx)
+			{
+				var msg = string.Empty;
+
+				foreach (var validationErrors in dbEx.EntityValidationErrors)
+					foreach (var validationError in validationErrors.ValidationErrors)
+						msg += string.Format("Property: {0} Error: {1}", validationError.PropertyName, validationError.ErrorMessage) + Environment.NewLine;
+
+				var fail = new Exception(msg, dbEx);
+				//Debug.WriteLine(fail.Message, fail);
+				throw fail;
+			}
             if (AfterUpdate != null)
             {
                 AfterUpdate.Invoke(this, new DataServiceEventArgs() { Items = models });
@@ -48,23 +64,38 @@ namespace Agile.Framework.Data
             {
                 BeforeCreate.Invoke(this, new DataServiceEventArgs() { Items = models });
             }
-            using (var db = GetContext())
-            {
-                var dbSet = db.Set<TModel>();
-                var clones = new List<TModel>();
-                foreach (var model in models)
-                {
-                    var clone = ObjectUtils.Clone(model);
-                    clones.Add(clone);
-                    dbSet.Add(clone);
-                }
-                var rowsAffected = db.SaveChanges();
-                for (var index = 0; index < models.Count(); index++)
-                {
-                    models[index].Id = clones[index].Id;
-                }
-                Debug.Assert(rowsAffected > 0);
-            }
+			try
+			{
+				using (var db = GetContext())
+				{
+					var dbSet = db.Set<TModel>();
+					var clones = new List<TModel>();
+					foreach (var model in models)
+					{
+						var clone = ObjectUtils.Clone(model);
+						clones.Add(clone);
+						dbSet.Add(clone);
+					}
+					var rowsAffected = db.SaveChanges();
+					for (var index = 0; index < models.Count(); index++)
+					{
+						models[index].Id = clones[index].Id;
+					}
+					Debug.Assert(rowsAffected > 0);
+				}
+			}
+			catch (DbEntityValidationException dbEx)
+			{
+				var msg = string.Empty;
+
+				foreach (var validationErrors in dbEx.EntityValidationErrors)
+					foreach (var validationError in validationErrors.ValidationErrors)
+						msg += string.Format("Property: {0} Error: {1}", validationError.PropertyName, validationError.ErrorMessage) + Environment.NewLine;
+
+				var fail = new Exception(msg, dbEx);
+				//Debug.WriteLine(fail.Message, fail);
+				throw fail;
+			}
             if (AfterCreate != null)
             {
                 AfterCreate.Invoke(this, new DataServiceEventArgs() { Items = models });
@@ -86,17 +117,33 @@ namespace Agile.Framework.Data
             {
                 BeforeDelete.Invoke(this, new DataServiceEventArgs() { Items = models });
             }
-            using (var db = GetContext())
-            {
-                foreach (var model in models)
-                {
-                    var clone = ObjectUtils.Clone<TModel>(model);
-                    var entry = db.Entry(clone);
-                    entry.State = EntityState.Deleted;
-                }
-                var rowsAffected = db.SaveChanges();
-                Debug.Assert(rowsAffected > 0);
-            }
+			try
+			{
+				using (var db = GetContext())
+				{
+					foreach (var model in models)
+					{
+						var clone = ObjectUtils.Clone<TModel>(model);
+						var entry = db.Entry(clone);
+						entry.State = EntityState.Deleted;
+					}
+					var rowsAffected = db.SaveChanges();
+					Debug.Assert(rowsAffected > 0);
+				}
+			}
+			catch (DbEntityValidationException dbEx)
+			{
+				var msg = string.Empty;
+
+				foreach (var validationErrors in dbEx.EntityValidationErrors)
+					foreach (var validationError in validationErrors.ValidationErrors)
+						msg += string.Format("Property: {0} Error: {1}", validationError.PropertyName, validationError.ErrorMessage) + Environment.NewLine;
+
+				var fail = new Exception(msg, dbEx);
+				//Debug.WriteLine(fail.Message, fail);
+				throw fail;
+			}
+            
             if (AfterDelete != null)
             {
                 AfterDelete.Invoke(this, new DataServiceEventArgs() { Items = models });
