@@ -165,13 +165,13 @@ namespace Agile.Framework.Data
 				//do some query
 				source = query.DoQuery(source);
 				var queryMode = query.Mode??QueryMode.Both;
-
+				bool isNoTracking = query.IsNoTracking ?? true;
 				if (queryMode == QueryMode.CountOnly)
 				{
 					query.CountOfResultSet = source.Count();
 					return result;
 				}
-				if (query.IsNoTracking == true)
+				if (isNoTracking)
 				{
 					source = source.AsNoTracking();
 				}
