@@ -9,7 +9,7 @@ namespace Agile.Common.Utilities
 {
     public static class ObjectUtils
     {
-        private static readonly object Locker = new object();
+        private static readonly object _lock = new object();
         private static readonly IDictionary<Type, Delegate> Cloners = new Dictionary<Type, Delegate>();
 
         private static Delegate CreateCloner<TModel>()
@@ -47,7 +47,7 @@ namespace Agile.Common.Utilities
             Delegate cloner;
             if (!Cloners.TryGetValue(type, out cloner))
             {
-                lock (Locker)
+                lock (_lock)
                 {
                     if (!Cloners.TryGetValue(type, out cloner))
                     {

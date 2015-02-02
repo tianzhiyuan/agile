@@ -66,15 +66,15 @@ namespace Agile.Framework.Complilation
          *      return source;
          * }
          */
-        public static Func<IQueryable<TModel>, IQuery<TModel>, IQueryable<TModel>> Compile<TModel>(IQuery query)
-            where TModel:class, IModel
+		public static Func<IQueryable<TModel>, BaseEntityQuery<TModel>, IQueryable<TModel>> Compile<TModel>(BaseEntityQuery query)
+            where TModel: BaseEntity
         {
-            Func<IQueryable<TModel>, IQuery<TModel>, IQueryable<TModel>> handler = null;
+			Func<IQueryable<TModel>, BaseEntityQuery<TModel>, IQueryable<TModel>> handler = null;
             var concreteQueryType = query.GetType();
             var modelType = query.ModelType;
             var queryProperties = concreteQueryType.GetProperties();
             var modelProperties = modelType.GetProperties();
-            var queryParamExpr = Expression.Parameter(typeof (IQuery<TModel>), "query");
+			var queryParamExpr = Expression.Parameter(typeof(BaseEntityQuery<TModel>), "query");
             var concreteQueryExpr = Expression.Parameter(concreteQueryType, "concreteQuery");
             var sourceParamExpr = Expression.Parameter(typeof (IQueryable<TModel>), "source");
             var context = new CompileContext()
@@ -103,7 +103,7 @@ namespace Agile.Framework.Complilation
             var expr = Expression.Lambda(
                 Expression.Block(new[] { concreteQueryExpr }, blocks), new[] { sourceParamExpr, queryParamExpr }
                 );
-            handler = (Func<IQueryable<TModel>, IQuery<TModel>, IQueryable<TModel>>)expr.Compile();
+			handler = (Func<IQueryable<TModel>, BaseEntityQuery<TModel>, IQueryable<TModel>>)expr.Compile();
             return handler;
         }
         public static MethodInfo WhereMethod(Type modelType)
@@ -445,7 +445,7 @@ namespace Agile.Framework.Complilation
             var queryParam = context.QueryParam;
             var sourceParam = context.SourceParam;
             var modelType = context.ModelType;
-            var defaultOrderField = "ID";
+            var defaultOrderField = "Id";
             var canOrderedProperties = context.ModelProperties.Where(
                 pi => pi.PropertyType == typeof (string) || pi.PropertyType.IsValueType).ToArray();
             var stringIsNullOrEmptyMethod = typeof (string).GetMethod("IsNullOrEmpty");
@@ -519,10 +519,10 @@ namespace Agile.Framework.Complilation
             return new Expression[] {blockExpr};
         }
 
-        public static IQueryable<TModel> PagerHandler<TModel>(IQueryable<TModel> source, IQuery<TModel> query)
-            where TModel : class, IModel
+		public static IQueryable<TModel> PagerHandler<TModel>(IQueryable<TModel> source, BaseEntityQuery<TModel> query)
+			where TModel :  BaseEntity
         {
-            query.Count = source.Count();
+            query.CountOfResultSet = source.Count();
             if (query.Skip != null && query.Skip > 0)
             {
                 source = source.Skip(query.Skip.Value);
@@ -558,7 +558,7 @@ namespace Agile.Framework.Complilation
                 var queryPropertyName = queryProperty.Name;
                 foreach (var modelProperty in modelProperties)
                 {
-                    if (queryPropertyName == modelProperty.Name + suffix && typeof(IQuery).IsAssignableFrom(queryProperty.PropertyType))
+					if (queryPropertyName == modelProperty.Name + suffix && typeof(BaseEntityQuery).IsAssignableFrom(queryProperty.PropertyType))
                     {
                         var naviBlocks = new List<Expression>();
                         var naviQueryParam = Expression.Parameter(queryProperty.PropertyType,

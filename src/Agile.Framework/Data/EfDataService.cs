@@ -1,26 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
 using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
-using Agile.Common;
-using Agile.Common.Components;
-using Agile.Common.Utilities;
-using Agile.Framework.Complilation;
 using Agile.Common.Data;
+using Agile.Common.Utilities;
 
 namespace Agile.Framework.Data
 {
-    public class DataService : IModelService
-    {
-
-        public DataService()
+	public class EfDataService : IModelService
+	{
+		public EfDataService()
         {
             Handlers = new Dictionary<Type, Delegate>();
         }
@@ -112,46 +103,6 @@ namespace Agile.Framework.Data
             }
         }
 
-
-		public IEnumerable<TModel> Select<TModel>(BaseEntityQuery<TModel> query) where TModel : BaseEntity
-		{
-            using (var db = GetContext())
-            {
-                var source = db.Set<TModel>() as IQueryable<TModel>;
-                var handlers = Handlers;
-                Delegate handler;
-                if (!handlers.TryGetValue(typeof(TModel), out handler))
-                {
-                    lock (_compileLock)
-                    {
-                        if (!handlers.TryGetValue(typeof(TModel), out handler))
-                        {
-                            handler = Compiler.Compile<TModel>(query);
-                            handlers.Add(typeof(TModel), handler);
-                        }
-                    }
-                }
-                IEnumerable<TModel> result;
-
-                if (query.Includes != null && query.Includes.Any())
-                {
-                    source = query.Includes.Aggregate(source, (current, include) => current.Include(include));
-                }
-				
-				result = ((Func<IQueryable<TModel>, BaseEntityQuery<TModel>, IQueryable<TModel>>)handler).Invoke(source,
-                                                                                                         query)
-                                                                                                 .AsNoTracking();
-                if (!(query.Take <= 0))
-                {
-                    result = result.ToList();
-                }
-                return result;
-            }
-        }
-
-
-
-        private readonly object _compileLock = new object();
         public string NameOrConnectionString { get; set; }
         public string ContextTypeString { get; set; }
 
@@ -200,8 +151,58 @@ namespace Agile.Framework.Data
                 return source.SqlQuery(query, parameters).AsNoTracking().ToList();
             }
         }
+		public IEnumerable<TModel> Select<TModel>(BaseEntityQuery<TModel> query) where TModel : BaseEntity
+		{
+			using (var db = GetContext())
+			{
+				var source = db.Set<TModel>() as IQueryable<TModel>;
+				IEnumerable<TModel> result = Enumerable.Empty<TModel>();
 
-        #region IModelService Members
+				if (query.Includes != null && query.Includes.Any())
+				{
+					source = query.Includes.Aggregate(source, (current, include) => current.Include(include));
+				}
+				//do some query
+				source = query.DoQuery(source);
+				var queryMode = query.Mode??QueryMode.Both;
+
+				if (queryMode == QueryMode.CountOnly)
+				{
+					query.CountOfResultSet = source.Count();
+					return result;
+				}
+				if (query.IsNoTracking == true)
+				{
+					source = source.AsNoTracking();
+				}
+
+				if (queryMode == QueryMode.Both)
+				{
+					query.CountOfResultSet = source.Count();
+				}
+
+				if (query.Skip > 0)
+				{
+					source = source.Skip(query.Skip ?? 0);
+				}
+
+				if (query.Take > 0)
+				{
+					source = source.Take(query.Take ?? 0);
+				}
+
+
+				if (!(query.Take <= 0))
+				{
+					result = source.ToList();
+				}
+				
+				return result;
+			}
+
+		}
+
+		#region IModelService Members
 
 		IEnumerable<TModel> IModelService.Select<TModel>(BaseEntityQuery<TModel> query) 
 		{
@@ -224,5 +225,5 @@ namespace Agile.Framework.Data
         }
 
         #endregion
-    }
+	}
 }

@@ -29,9 +29,15 @@ namespace Agile.Common.Utilities
                    typeof (IAssemblyInitializer).IsAssignableFrom(type);
         }
 
-        public static bool IsModel(Type type)
+        public static bool IsBaseEntity(Type type)
         {
-            return type != null && type.IsClass && !type.IsAbstract && typeof (IModel).IsAssignableFrom(type);
+            return type != null && type.IsClass && !type.IsAbstract && typeof (BaseEntity).IsAssignableFrom(type);
         }
+
+		public static bool IsBaseEntityQuery(Type type)
+		{
+			return type != null && type.IsClass && !type.IsAbstract && !type.IsGenericType &&
+			       typeof (BaseEntityQuery).IsAssignableFrom(type);
+		}
     }
 }

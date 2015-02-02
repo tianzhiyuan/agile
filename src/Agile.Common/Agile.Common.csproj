@@ -54,11 +54,10 @@
     <Compile Include="Components\IObjectContainer.cs" />
     <Compile Include="Components\ObjectContainer.cs" />
     <Compile Include="Configurations\Configuration.cs" />
-    <Compile Include="Data\AbstractModel.cs" />
-    <Compile Include="Data\IModel.cs" />
-    <Compile Include="Data\IQuery.cs" />
-    <Compile Include="Data\ModelComparer.cs" />
+    <Compile Include="Data\BaseEntity.cs" />
+    <Compile Include="Data\BaseEntityQuery.cs" />
     <Compile Include="Data\OrderDirection.cs" />
+    <Compile Include="Data\QueryMode.cs" />
     <Compile Include="Exceptions\RuleViolatedType.cs" />
     <Compile Include="Extensions\IEnumerableExtensions.cs" />
     <Compile Include="Exceptions\Require.cs" />

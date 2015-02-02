@@ -95,14 +95,14 @@ namespace Agile.UI.Mvc
     }
 
     public class BaseController<TModel, TQuery> : BaseController
-        where TModel : class, IModel, new()
-        where TQuery : IQuery<TModel>, new()
+        where TModel : BaseEntity, new()
+		where TQuery : BaseEntityQuery<TModel>, new()
     {
         public virtual ActionResult List(TQuery query)
         {
             var svc = Service;
             var models = svc.Select(query);
-            return Serialize(new {success = true, items = models, count = query.Count});
+            return Serialize(new {success = true, items = models, count = query.CountOfResultSet});
         }
 
         [AcceptVerbs(HttpVerbs.Post | HttpVerbs.Put | HttpVerbs.Delete)]

@@ -9,12 +9,12 @@ namespace Agile.Framework.Data
 {
     public interface IModelService
     {
-        IEnumerable<TModel> Select<TModel>(IQuery<TModel> query)
-            where TModel : class, IModel;
+		IEnumerable<TModel> Select<TModel>(BaseEntityQuery<TModel> query)
+			where TModel :  BaseEntity;
 
-        void Update<TModel>(params TModel[] models) where TModel : class, IModel, new();
-        void Delete<TModle>(params TModle[] models) where TModle : class, IModel, new();
-        void Create<TModel>(params TModel[] models) where TModel : class, IModel, new();
+		void Update<TModel>(params TModel[] models) where TModel :  BaseEntity, new();
+		void Delete<TModle>(params TModle[] models) where TModle :  BaseEntity, new();
+		void Create<TModel>(params TModel[] models) where TModel :  BaseEntity, new();
 
         
 

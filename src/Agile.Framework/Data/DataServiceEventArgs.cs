@@ -9,6 +9,6 @@ namespace Agile.Framework.Data
 
     public class DataServiceEventArgs : EventArgs
     {
-        public IModel[] Items { get; internal set; }
+		public BaseEntity[] Items { get; internal set; }
     }
 }

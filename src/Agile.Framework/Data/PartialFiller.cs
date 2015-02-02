@@ -21,11 +21,11 @@ namespace Agile.Framework.Data
         /// <param name="model">被填充的模型</param>
         /// <returns>当前数据库中的对象拷贝</returns>
         public static TModel Fill<TModel, TQuery>(TModel model)
-            where TModel:class, IModel
-            where TQuery:IQuery<TModel>,new()
+            where TModel: BaseEntity
+            where TQuery:BaseEntityQuery<TModel>,new()
         {
-            if (model == null || model.ID == null) return model;
-            var query = new TQuery() {ID = model.ID};
+            if (model == null || model.Id == null) return model;
+            var query = new TQuery() {Id = model.Id};
             var svc = ObjectContainer.Resolve<IModelService>();
             var current = svc.FirstOrDefault(query);
             AutoMapper.Mapper.Map(current, model);
@@ -38,16 +38,16 @@ namespace Agile.Framework.Data
         /// <param name="models">被填充的模型</param>
         /// <returns>当前数据库中的对象拷贝</returns>
         public static TModel[]  Fill<TModel, TQuery>(TModel[] models)
-            where TModel : class, IModel
-            where TQuery : IQuery<TModel>, new()
+            where TModel :  BaseEntity
+            where TQuery : BaseEntityQuery<TModel>, new()
         {
             if (models == null || !models.Any()) return new TModel[0];
-            var query = new TQuery() {IDList = models.Select(o => o.ID).OfType<int>().ToArray()};
+            var query = new TQuery() {IdList = models.Select(o => o.Id).OfType<int>().ToArray()};
             var svc = ObjectContainer.Resolve<IModelService>();
             var origins = svc.Select(query);
             foreach (var model in models)
             {
-                var origin = origins.FirstOrDefault(o => o.ID == model.ID);
+                var origin = origins.FirstOrDefault(o => o.Id == model.Id);
                 AutoMapper.Mapper.Map(origin, model);
             }
             return origins.ToArray();
@@ -68,10 +68,10 @@ namespace Agile.Framework.Data
             {
                 try
                 {
-                    foreach (var type in assembly.GetTypes().Where(TypeUtils.IsModel))
+                    foreach (var type in assembly.GetTypes().Where(TypeUtils.IsBaseEntity))
                     {
                         var method =
-                            new Action(this.CreateMap<AbstractModel>).Method.GetGenericMethodDefinition()
+                            new Action(this.CreateMap<BaseEntity>).Method.GetGenericMethodDefinition()
                                                                      .MakeGenericMethod(type);
                         method.Invoke(this, null);
 

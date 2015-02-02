@@ -93,9 +93,9 @@ namespace Agile.Common.Exceptions
                 throw new RuleViolatedException(string.Format(Resources.RuleViolated_Duplicated, name));
             }
         }
-        public static void Duplicate<TModel>(TModel left, TModel right, string name) where TModel : class ,IModel
+        public static void Duplicate<TModel>(TModel left, TModel right, string name) where TModel : BaseEntity
         {
-            if (new ModelComparer<TModel>().Equals(left, right))
+            if (left == right)
             {
                 throw new RuleViolatedException(string.Format(Resources.RuleViolated_Duplicated, name));
             }
