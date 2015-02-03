@@ -19,4 +19,4 @@ agile
 - 前端页面框架(bootstrap+angularjs)
 - 集成部分第三方平台（支付/登录）
 
-Any ideas contact tianzhiyuan@126.com
+Any ideas contact tianzhiyuan126@126.com
