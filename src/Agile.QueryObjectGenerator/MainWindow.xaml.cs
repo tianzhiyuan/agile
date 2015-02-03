@@ -23,28 +23,43 @@ namespace Agile.QueryObjectGenerator
 	{
 		public MainWindow()
 		{
+			this.Initialized += OnInit;
 			InitializeComponent();
+			
 		}
-
-		private void btnAnalyze_Click(object sender, RoutedEventArgs e)
+		protected void OnInit(object sender, EventArgs args)
 		{
-			var typeText = modelTypeTxt.Text;
-			var queryType = Type.GetType(typeText);
-			if (queryType == null)
+			var queryTypes = Util.GetAllQueryTypes(AppDomain.CurrentDomain.GetAssemblies()).OrderBy(o => o.Name);
+			foreach (var type in queryTypes)
 			{
-				codeBlock.Text = "类型错误";
-				return;
+				var button = new Button();
+				button.Content = type.Name;
+				button.Height = 22;
+				button.Margin = new Thickness(5);
+				button.ToolTip = type.FullName;
+				button.Click += OnQueryBtnClick;
+				button.DataContext = type;
+				container.Children.Add(button);
 			}
+		}
+		protected void OnQueryBtnClick(object sender, RoutedEventArgs e)
+		{
+			var btn = (Button) sender;
+			var type = btn.DataContext;
+			var window = new CodeWindow() {QueryType = (Type) type};
+			var typeText = "";
 			try
 			{
-				codeBlock.Text = new QueryObjectParser().GenerateQueryStatement(queryType);
+				typeText = new QueryObjectParser().GenerateQueryStatement((Type) type);
 			}
-			catch (Exception ex)
+			catch (Exception error)
 			{
-				codeBlock.Text = ex.ToString();
+				typeText = error.ToString();
 			}
-
+			window.code.Text = typeText;
+			window.ShowDialog();
 		}
+		
 
 
 	}

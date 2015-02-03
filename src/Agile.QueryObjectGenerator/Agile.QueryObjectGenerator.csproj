@@ -59,9 +59,16 @@
     <Compile Include="Analyzers\PaginationAnalyzer.cs" />
     <Compile Include="Analyzers\RangeAnalyzer.cs" />
     <Compile Include="Analyzers\StringContainsAnalyzer.cs" />
+    <Compile Include="CodeWindow.xaml.cs">
+      <DependentUpon>CodeWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="QueryObjectParser.cs" />
     <Compile Include="StringBuilderExtension.cs" />
     <Compile Include="Util.cs" />
+    <Page Include="CodeWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -107,6 +114,9 @@
       <Project>{77128248-6afc-4be6-837e-6da8703ada30}</Project>
       <Name>Agile.Common</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="QueryParser.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
