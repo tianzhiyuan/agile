@@ -9,6 +9,7 @@ namespace Agile.Framework.Data
 			where TModel : BaseEntity
         {
 			query.Mode = QueryMode.ResultSetOnly;
+			query.Take = 1;
             var models = svc.Select(query);
 			return models.SingleOrDefault();
         }

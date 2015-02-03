@@ -49,6 +49,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
@@ -73,6 +74,9 @@
     <Compile Include="File\File.cs" />
     <Compile Include="File\FileType.cs" />
     <Compile Include="File\IFileService.cs" />
+    <Compile Include="Install\CreateTableIfNotExistsMsSql.cs" />
+    <Compile Include="Install\CreateTableIfNotExistsMySql.cs" />
+    <Compile Include="Install\IInstallService.cs" />
     <Compile Include="Module\AbstractModule.cs" />
     <Compile Include="Module\IModule.cs" />
     <Compile Include="Plugins\AbstractPlugin.cs" />

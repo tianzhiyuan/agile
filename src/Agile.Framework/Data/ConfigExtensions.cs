@@ -12,10 +12,10 @@ namespace Agile.Framework.Data
 {
     public static class ConfigExtensions
     {
-        public static Configuration UseDataService(this Configuration configuration, string dbContext, string nameOrConnectionString)
+        public static Configuration UseDataService(this Configuration configuration, Type dbContextType, string nameOrConnectionString)
         {
-            var svc = new DataService() {ContextTypeString = dbContext, NameOrConnectionString = nameOrConnectionString};
-            configuration.SetDefault<IModelService, DataService>(svc);
+			var svc = new EfDataService() { DbContextType = dbContextType, NameOrConnectionString = nameOrConnectionString };
+			configuration.SetDefault<IModelService, EfDataService>(svc);
             return configuration;
         }
 

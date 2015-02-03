@@ -17,6 +17,7 @@ using Agile.Common.Data;
 
 namespace Agile.Framework.Data
 {
+	[Obsolete]
     public class DataService : IModelService
     {
 
@@ -192,6 +193,7 @@ namespace Agile.Framework.Data
             return db;
         }
 
+		
         public IEnumerable<TModel> SqlQuery<TModel>(string query, params object[] parameters) where TModel : class
         {
             using (var db = GetContext())

@@ -28,8 +28,8 @@ namespace Agile.Framework.Data
 				{
 					if (_createContext == null)
 					{
-						var type = Type.GetType(ContextTypeString);
-						if (type == null) throw new ArgumentNullException("ContextTypeString");
+						var type = DbContextType;
+						if (type == null) throw new ArgumentNullException("DbContextType");
 
 						var constructors = type.GetConstructors();
 						var arg = Expression.Parameter(typeof(string));
@@ -185,6 +185,7 @@ namespace Agile.Framework.Data
 
         public string NameOrConnectionString { get; set; }
         public string ContextTypeString { get; set; }
+		public Type DbContextType { get; set; }
         public IEnumerable<TModel> SqlQuery<TModel>(string query, params object[] parameters) where TModel : class
         {
             using (var db = GetContext())
@@ -243,7 +244,14 @@ namespace Agile.Framework.Data
 			}
 
 		}
-
+		public IQueryable<TModel> GetTable<TModel>() where TModel : class
+		{
+			using (var db = GetContext())
+			{
+				var source = db.Set<TModel>();
+				return source;
+			}
+		}
 		#region IModelService Members
 
 		IEnumerable<TModel> IModelService.Select<TModel>(BaseEntityQuery<TModel> query) 

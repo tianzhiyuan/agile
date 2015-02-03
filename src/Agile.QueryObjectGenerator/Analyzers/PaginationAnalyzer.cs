@@ -13,6 +13,8 @@ namespace Agile.QueryObjectGenerator.Analyzers
 		public string ParseStatement( PropertyInfo[] modelProperties, string sourceParamName)
 		{
 			var builder = new StringBuilder();
+			builder.AppendLineFormat("if(Take>0 || Skip>0)");
+			builder.AppendLine("{");
 			builder.AppendLineFormat("switch(OrderField)");
 			builder.AppendLine("{");
 			foreach (var modelProperty in modelProperties)
@@ -33,7 +35,7 @@ namespace Agile.QueryObjectGenerator.Analyzers
 						KeyPropertyName);
 			builder.AppendLine("break;");
 			builder.AppendLine("}");
-
+			builder.AppendLine("}");
 
 			return builder.ToString();
 		}
