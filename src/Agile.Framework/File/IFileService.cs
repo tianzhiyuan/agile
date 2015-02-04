@@ -37,5 +37,11 @@ namespace Agile.Framework.File
 		/// <param name="fileHandle">文件句柄</param>
 		/// <returns></returns>
 		string GetAccessUrl(string fileHandle);
+		/// <summary>
+		/// 获取元数据
+		/// </summary>
+		/// <param name="fileHandle"></param>
+		/// <returns></returns>
+	    FileMetadata GetMetedata(string fileHandle);
     }
 }

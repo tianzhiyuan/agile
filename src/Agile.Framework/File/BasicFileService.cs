@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Agile.Common;
+using Agile.Common.Logging;
 using Agile.Common.Security;
 using Agile.Framework.Data;
 
@@ -16,13 +17,13 @@ namespace Agile.Framework.File
 	public class BasicFileService : IFileService
 	{
 		private IModelService _dataService;
-		
+		private ILogger _logger;
 		private static readonly DateTime baseDate = new DateTime(2000, 1, 1);
 		private static long GetEpoch(DateTime dt)
 		{
 			return (long)(dt - baseDate).TotalMilliseconds;
 		}
-		private const string Clist = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ-_";
+		private const string Clist = "0123456789abcdefghijklmnopqrstuvwxyz-_";
 		private static readonly char[] Clistarr = Clist.ToCharArray();
 		private string Encode(long inputNumber)
 		{
@@ -38,9 +39,10 @@ namespace Agile.Framework.File
 		{
 			return (long) (current - new DateTime(current.Year, current.Month, 0)).TotalMilliseconds;
 		}
-		public BasicFileService(IModelService service)
+		public BasicFileService(IModelService service, ILoggerFactory factory)
 		{
 			_dataService = service;
+			_logger = factory.Create(typeof (BasicFileService));
 			BaseDirectory = WebHelper.MapPath("~/uploadfiles");
 		}
 		public string BaseDirectory { get; set; }
@@ -80,7 +82,7 @@ namespace Agile.Framework.File
 			}
 			catch (Exception error)
 			{
-				
+				_logger.Debug(string.Format("create directory error[{0}]", directory), error);
 			}
 			try
 			{
@@ -89,6 +91,7 @@ namespace Agile.Framework.File
 			}
 			catch (Exception error)
 			{
+				_logger.Error(string.Format("create error[{0}]", fileHandle), error);
 				return null;
 			}
 			
@@ -105,6 +108,7 @@ namespace Agile.Framework.File
 			}
 			catch (Exception error)
 			{
+				_logger.Error(string.Format("delete error[{0}]", fileHandle), error);
 				return false;
 			}
 			return true;
@@ -119,6 +123,11 @@ namespace Agile.Framework.File
 		{
 			var path = string.Format("/{0}/{1}/{2}", fileHandle.Substring(0, 3), fileHandle.Substring(3, 6), fileHandle);
 			return new UriBuilder(AccessUrlRoot) {Path = path}.ToString();
+		}
+
+		public FileMetadata GetMetedata(string fileHandle)
+		{
+			throw new NotImplementedException();
 		}
 	}
 }
