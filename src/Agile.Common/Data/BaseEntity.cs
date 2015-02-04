@@ -2,11 +2,23 @@
 
 namespace Agile.Common.Data
 {
+	/// <summary>
+	/// represents base entity
+	/// </summary>
     [Serializable]
     public abstract class BaseEntity
     {
+		/// <summary>
+		/// key field of a entity
+		/// </summary>
         public int Id { get; set; }
+		/// <summary>
+		/// entity create timestamp
+		/// </summary>
         public DateTime CreatedAt { get; set; }
+		/// <summary>
+		/// entity last modify timestamp
+		/// </summary>
         public DateTime LastModifiedAt { get; set; }
 
 		private static bool IsTransient(BaseEntity obj)
