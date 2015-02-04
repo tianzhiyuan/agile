@@ -10,7 +10,7 @@ namespace Agile.Common.Exceptions
 {
     public static class Require
     {
-        public static void SafeInvoke(Action act)
+        public static void EatException(Action act)
         {
             try
             {

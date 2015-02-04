@@ -59,5 +59,86 @@ namespace Agile.Framework.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   查找类似 任务执行结束事件回调出错。任务key:{0},Name:{1} 的本地化字符串。
+        /// </summary>
+        internal static string Schedule_AfterTaskRunningEventError {
+            get {
+                return ResourceManager.GetString("Schedule_AfterTaskRunningEventError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 任务执行前事件回调出错。任务key:{0}, Name:{1} 的本地化字符串。
+        /// </summary>
+        internal static string Schedule_BeforeTaskRunningEventError {
+            get {
+                return ResourceManager.GetString("Schedule_BeforeTaskRunningEventError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 已经有一个不可重入的任务在执行。任务key:{0}, Name:{1} 的本地化字符串。
+        /// </summary>
+        internal static string Schedule_NonreentrantTaskRunning {
+            get {
+                return ResourceManager.GetString("Schedule_NonreentrantTaskRunning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 任务结束执行。key:{0}, Name:{1},ElapsedTime:{2} 的本地化字符串。
+        /// </summary>
+        internal static string Schedule_TaskEnd {
+            get {
+                return ResourceManager.GetString("Schedule_TaskEnd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 任务开始执行。key:{0}, Name:{1} 的本地化字符串。
+        /// </summary>
+        internal static string Schedule_TaskStart {
+            get {
+                return ResourceManager.GetString("Schedule_TaskStart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 终止时间不可以早于当前时间 的本地化字符串。
+        /// </summary>
+        internal static string Trigger_EndTimeEarlyThanCurrent {
+            get {
+                return ResourceManager.GetString("Trigger_EndTimeEarlyThanCurrent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 终止时间不可以早于首次触发时间 的本地化字符串。
+        /// </summary>
+        internal static string Trigger_EndTimeEarlyThanStartTime {
+            get {
+                return ResourceManager.GetString("Trigger_EndTimeEarlyThanStartTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Repeat interval must larger than zero 的本地化字符串。
+        /// </summary>
+        internal static string Trigger_IntervalLargerThanZero {
+            get {
+                return ResourceManager.GetString("Trigger_IntervalLargerThanZero", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 cannot less than 1, use RepeatInfinite for infinite 的本地化字符串。
+        /// </summary>
+        internal static string Trigger_RepeatCountNoLessThanOne {
+            get {
+                return ResourceManager.GetString("Trigger_RepeatCountNoLessThanOne", resourceCulture);
+            }
+        }
     }
 }

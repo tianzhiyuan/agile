@@ -93,6 +93,18 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Tasks\Impl\AbstractTask.cs" />
+    <Compile Include="Tasks\Impl\AbstractTrigger.cs" />
+    <Compile Include="Tasks\Impl\DailyTrigger.cs" />
+    <Compile Include="Tasks\Impl\DefaultScheduler.cs" />
+    <Compile Include="Tasks\Impl\RepeatTrigger.cs" />
+    <Compile Include="Tasks\Impl\SimpleTask.cs" />
+    <Compile Include="Tasks\Impl\TimerTrigger.cs" />
+    <Compile Include="Tasks\IScheduler.cs" />
+    <Compile Include="Tasks\ITask.cs" />
+    <Compile Include="Tasks\ITrigger.cs" />
+    <Compile Include="Tasks\TaskExecutionArgs.cs" />
+    <Compile Include="Tasks\TaskExecutionContext.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
