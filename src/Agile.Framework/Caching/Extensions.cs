@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Agile.Common.Caching
+namespace Agile.Framework.Caching
 {
-    public static class CacheExtension
+    public static class Extensions
     {
         public static void AddOrUpdate(this ICache cache, string Key, object cacheObj, int minites)
         {
@@ -22,5 +22,6 @@ namespace Agile.Common.Caching
             var key = typeof(T).FullName;
             return (T)cache.Get(key);
         }
+		
     }
 }

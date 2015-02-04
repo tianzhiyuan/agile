@@ -26,7 +26,7 @@ namespace Agile.Framework.File
             }
         }
 
-        public string[] AcceptExtensions { get; set; }
+        public string[] AcceptExtensions { get; private set; }
     }
     public enum FileType
     {
@@ -40,5 +40,7 @@ namespace Agile.Framework.File
         Video = 4,
         [FileTypeAcceptExtension("mp3,wav,rm")]
         Audio = 5,
+
+		
     }
 }

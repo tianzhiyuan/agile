@@ -15,8 +15,13 @@ namespace Agile.Common.Data
 		/// query result set and total count
 		/// </summary>
 		Both = 1,
-
+		/// <summary>
+		/// only query total count
+		/// </summary>
 		CountOnly = 2,
+		/// <summary>
+		/// only query result set
+		/// </summary>
 		ResultSetOnly = 3,
 	}
 }

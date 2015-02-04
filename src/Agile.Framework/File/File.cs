@@ -6,24 +6,23 @@ using System.Threading.Tasks;
 
 namespace Agile.Framework.File
 {
+	
     /// <summary>
     /// 文件
     /// </summary>
     public class File
     {
-        public File()
-        {
-            Type = FileType.General;
-        }
-        public long FileID { get; set; }
-        public int Size { get; set; }
-        public byte[] Content { get; set; }
-        public string FileName { get; set; }
-        public string RealPath { get; set; }
-        public FileType Type { get; set; }
+		public string Handle { get; set; }
+		public FileMetadata Metadata { get; set; }
     }
-    public class FileQuery
+    public class FileMetadata
     {
-        public long[] FileIDs { get; set; }
+		public FileMetadata()
+		{
+			Type = FileType.General;
+		}
+		public int Size { get; set; }
+		public string Name { get; set; }
+		public FileType Type { get; set; }
     }
 }

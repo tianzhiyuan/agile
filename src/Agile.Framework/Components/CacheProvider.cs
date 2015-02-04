@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Agile.Common.Caching;
 using Agile.Common.Components;
 using Agile.Common.Exceptions;
+using Agile.Framework.Caching;
 
 namespace Agile.Framework.Components
 {
@@ -33,7 +33,7 @@ namespace Agile.Framework.Components
                 if (_updaters.TryGetValue(key, out cacheItem))
                 {
                     obj = cacheItem.Updater.Invoke();
-                    _innerCache.AddOrUpdate(key, obj);
+	                _innerCache.AddOrUpdate(key, obj, 30);
                 }
                 else
                 {
@@ -49,7 +49,7 @@ namespace Agile.Framework.Components
             if (_updaters.TryGetValue(key, out cacheItem))
             {
                 obj = cacheItem.Updater.Invoke();
-                _innerCache.AddOrUpdate(key, obj);
+	            _innerCache.AddOrUpdate(key, obj, 30);
             }
             else
             {

@@ -4,7 +4,6 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using Agile.Common.Caching;
 using Agile.Common.Components;
 using Agile.Common.Serialization;
 using Agile.Common.Utilities;
@@ -39,7 +38,6 @@ namespace Agile.Common.Configurations
         public Configuration RegisterCommon()
         {
             this.SetDefault<IJsonSerializer, Json>();
-            this.SetDefault<ICache, MemoryCache>();
             return this;
         }
 

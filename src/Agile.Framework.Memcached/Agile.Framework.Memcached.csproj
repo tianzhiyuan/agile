@@ -4,14 +4,13 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{77128248-6AFC-4BE6-837E-6DA8703ADA30}</ProjectGuid>
+    <ProjectGuid>{59C93F55-81CC-4B23-B592-9D3CDA658E57}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Agile.Common</RootNamespace>
-    <AssemblyName>Agile.Common</AssemblyName>
+    <RootNamespace>Agile.Framework.Memcached</RootNamespace>
+    <AssemblyName>Agile.Framework.Memcached</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -21,7 +20,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -30,16 +28,13 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Enyim.Caching">
+      <HintPath>..\packages\EnyimMemcached.2.12\lib\net35\Enyim.Caching.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -47,45 +42,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="WebHelper.cs" />
-    <Compile Include="Components\ComponentAttribute.cs" />
-    <Compile Include="Components\IObjectContainer.cs" />
-    <Compile Include="Components\ObjectContainer.cs" />
-    <Compile Include="Configurations\Configuration.cs" />
-    <Compile Include="Data\BaseEntity.cs" />
-    <Compile Include="Data\BaseEntityQuery.cs" />
-    <Compile Include="Data\OrderDirection.cs" />
-    <Compile Include="Data\QueryMode.cs" />
-    <Compile Include="Exceptions\RuleViolatedType.cs" />
-    <Compile Include="Extensions\IEnumerableExtensions.cs" />
-    <Compile Include="Exceptions\Require.cs" />
-    <Compile Include="IAssemblyInitializer.cs" />
-    <Compile Include="Logging\ILogger.cs" />
-    <Compile Include="Logging\Extensions.cs" />
-    <Compile Include="Logging\LogLevel.cs" />
-    <Compile Include="Logging\NullLogger.cs" />
-    <Compile Include="Message\IMessage.cs" />
+    <Compile Include="Memcached.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Data\Range.cs" />
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Security\Encryption.cs" />
-    <Compile Include="Serialization\IJsonSerializer.cs" />
-    <Compile Include="Serialization\Json.cs" />
-    <Compile Include="Exceptions\ViolationException.cs" />
-    <Compile Include="Utilities\ObjectUtils.cs" />
-    <Compile Include="Utilities\RandomUtils.cs" />
-    <Compile Include="Utilities\RegexPatterns.cs" />
-    <Compile Include="Utilities\TypeUtils.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
+    <ProjectReference Include="..\Agile.Common\Agile.Common.csproj">
+      <Project>{77128248-6afc-4be6-837e-6da8703ada30}</Project>
+      <Name>Agile.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Agile.Framework\Agile.Framework.csproj">
+      <Project>{d31c25dd-b900-42f6-9ba6-2e30ba039671}</Project>
+      <Name>Agile.Framework</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
