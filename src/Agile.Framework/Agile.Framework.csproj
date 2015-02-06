@@ -75,7 +75,8 @@
     <Compile Include="Data\IModelService.cs" />
     <Compile Include="Data\DataService.cs" />
     <Compile Include="Data\Extensions.cs" />
-    <Compile Include="File\BasicFileService.cs" />
+    <Compile Include="File\Impl\FtpFileService.cs" />
+    <Compile Include="File\Impl\LocalFileService.cs" />
     <Compile Include="File\File.cs" />
     <Compile Include="File\FileType.cs" />
     <Compile Include="File\FileTypeUtil.cs" />

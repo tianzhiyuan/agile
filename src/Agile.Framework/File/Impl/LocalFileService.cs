@@ -9,12 +9,12 @@ using Agile.Common.Logging;
 using Agile.Common.Security;
 using Agile.Framework.Data;
 
-namespace Agile.Framework.File
+namespace Agile.Framework.File.Impl
 {
 	/// <summary>
 	/// 直接存储在应用本地的文件服务
 	/// </summary>
-	public class BasicFileService : IFileService
+	public class LocalFileService : IFileService
 	{
 		private IModelService _dataService;
 		private ILogger _logger;
@@ -39,10 +39,10 @@ namespace Agile.Framework.File
 		{
 			return (long) (current - new DateTime(current.Year, current.Month, 0)).TotalMilliseconds;
 		}
-		public BasicFileService(IModelService service, ILoggerFactory factory)
+		public LocalFileService(IModelService service, ILoggerFactory factory)
 		{
 			_dataService = service;
-			_logger = factory.Create(typeof (BasicFileService));
+			_logger = factory.Create(typeof (LocalFileService));
 			BaseDirectory = WebHelper.MapPath("~/uploadfiles");
 		}
 		public string BaseDirectory { get; set; }
@@ -55,11 +55,11 @@ namespace Agile.Framework.File
 			//路径: [文件类型]/[年月]/文件句柄.后缀
 			//文件句柄: 文件类型年月随机字符串.后缀
 			//其中文件类型取类型名称的前三个字符，命名时应该注意！
-			var fileTypeName = fileType.ToString().PadLeft(3, '0');
+			var fileTypeName = fileType.ToString().Substring(0, 3).PadLeft(3, '0');
 			var middleName = string.Format("{0:yyyyMM}", DateTime.Now);
 			//3+6+6+12
 			var rand = string.Format("{0}{1,12}", Encode(GetMillisecondsOfAMonth(now)),
-			                         new Guid().ToString().Replace('-', '\0'));
+									 Guid.NewGuid().ToString().Replace("-", ""));
 			var fileHandle = string.Format("{0}{1}{2}{3}", fileTypeName, middleName, rand, extension);
 			var file = new File()
 				{
