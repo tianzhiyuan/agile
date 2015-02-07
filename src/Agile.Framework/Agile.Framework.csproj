@@ -94,6 +94,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Setting\ISetting.cs" />
     <Compile Include="Tasks\Impl\AbstractTask.cs" />
     <Compile Include="Tasks\Impl\AbstractTrigger.cs" />
     <Compile Include="Tasks\Impl\DailyTrigger.cs" />
