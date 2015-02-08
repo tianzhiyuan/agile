@@ -40,5 +40,11 @@ namespace Agile.Framework.Test
 			var bytes = System.IO.File.ReadAllBytes(@"d:\test.jpg");
 			svc.Create(bytes, "test.jpg");
 		}
+		[Test]
+		public void Test3()
+		{
+			int[] obj = new int[]{1,2};
+			Console.WriteLine(Convert.ToString(obj));
+		}
 	}
 }
