@@ -45,6 +45,9 @@ namespace Agile.Framework.Test
 		{
 			int[] obj = new int[]{1,2};
 			Console.WriteLine(Convert.ToString(obj));
+
+			var test = "1";
+			Console.WriteLine(Convert.ChangeType(test, typeof (int)));
 		}
 	}
 }

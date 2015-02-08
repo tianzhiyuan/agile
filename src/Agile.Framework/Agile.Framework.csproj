@@ -62,6 +62,7 @@
   <ItemGroup>
     <Compile Include="Caching\Extensions.cs" />
     <Compile Include="Caching\ICache.cs" />
+    <Compile Include="Caching\ICachePolicy.cs" />
     <Compile Include="Caching\MemoryCache.cs" />
     <Compile Include="Complilation\Compiler.cs" />
     <Compile Include="Components\CacheProvider.cs" />
