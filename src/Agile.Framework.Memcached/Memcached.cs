@@ -10,7 +10,7 @@ using Enyim.Caching.Memcached;
 
 namespace Agile.Framework.Memcached
 {
-	public class Memcached : ICache
+	public class Memcached : ICacheService
 	{
 		private readonly MemcachedClient _client;
 		
@@ -18,13 +18,15 @@ namespace Agile.Framework.Memcached
 		{
 			_client = new MemcachedClient();
 		}
-		public void AddOrUpdate(string key, object cacheObj, TimeSpan expiredAfter)
+		
+
+
+		public void Set(string key, object cacheObj, TimeSpan expiredAfter)
 		{
 			_client.Store(StoreMode.Set, key, cacheObj, expiredAfter);
-			
 		}
 
-		public void Delete(string key)
+		public void Remove(string key)
 		{
 			_client.Remove(key);
 		}
@@ -34,32 +36,20 @@ namespace Agile.Framework.Memcached
 			return _client.Get(key);
 		}
 
-		
-		#region ICache.Members
-		void ICache.AddOrUpdate(string Key, object cacheObj, TimeSpan expiredAfter)
+		public bool Exists(string key)
 		{
-			this.AddOrUpdate(Key, cacheObj, expiredAfter);
+			object obj;
+			return _client.TryGet(key, out obj);
 		}
 
-		void ICache.Delete(string Key)
+		public object this[string key]
 		{
-			this.Delete(Key);
+			get { return _client.Get(key); }
 		}
 
-		object ICache.Get(string Key)
+		public IDictionary<string, object> Get(string[] keys)
 		{
-			return this.Get(Key);
+			return _client.Get(keys);
 		}
-
-		IEnumerable<string> ICache.Keys
-		{
-			get { throw new NotSupportedException(); }
-		}
-
-		void ICache.Clear()
-		{
-			throw new NotSupportedException();
-		}
-		#endregion
 	}
 }

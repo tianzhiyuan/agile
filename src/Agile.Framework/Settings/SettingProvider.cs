@@ -17,8 +17,8 @@ namespace Agile.Framework.Settings
 		
 		private ILogger _logger;
 		private IModelService _modelService;
-		private ICache _cache;
-		public SettingProvider(ILoggerFactory factory, IModelService service, ICache cacheProvider)
+		private ICacheService _cache;
+		public SettingProvider(ILoggerFactory factory, IModelService service, ICacheService cacheProvider)
 		{
 			_logger = factory.Create(typeof (SettingProvider));
 			_modelService = service;
@@ -107,7 +107,7 @@ namespace Agile.Framework.Settings
 				cacheObj = new Dictionary<string, ISetting>();
 				if (!allSettings.Any())
 				{
-					_cache.AddOrUpdate(SettingConstant.SettingCacheKey, 10);
+					_cache.Set(SettingConstant.SettingCacheKey, cacheObj, 10);
 				}
 				else
 				{
@@ -143,7 +143,7 @@ namespace Agile.Framework.Settings
 						}
 						cacheObj.Add(settingProperties.Key, defaultInstance);
 					}
-					_cache.AddOrUpdate(SettingConstant.SettingCacheKey, 30);
+					_cache.Set(SettingConstant.SettingCacheKey, cacheObj, 30);
 				}
 			}
 			return cacheObj;
@@ -161,7 +161,7 @@ namespace Agile.Framework.Settings
 				});
 		}
 		
-
+		
 		public void Initialize(Assembly[] assemblies)
 		{
 			var settingTypes = new List<Type>();

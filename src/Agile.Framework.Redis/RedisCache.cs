@@ -7,14 +7,14 @@ using Agile.Framework.Caching;
 
 namespace Agile.Framework.Redis
 {
-    public class RedisCache : ICache
+    public class RedisCache : ICacheService
     {
-	    public void AddOrUpdate(string key, object cacheObj, TimeSpan expiredAfter)
+	    public void Set(string key, object cacheObj, TimeSpan expiredAfter)
 	    {
 		    throw new NotImplementedException();
 	    }
 
-	    public void Delete(string key)
+	    public void Remove(string key)
 	    {
 		    throw new NotImplementedException();
 	    }
@@ -24,8 +24,17 @@ namespace Agile.Framework.Redis
 		    throw new NotImplementedException();
 	    }
 
-	    public IEnumerable<string> Keys { get; private set; }
-	    public void Clear()
+	    public bool Exists(string key)
+	    {
+		    throw new NotImplementedException();
+	    }
+
+	    public object this[string key]
+	    {
+		    get { throw new NotImplementedException(); }
+	    }
+
+	    public IDictionary<string, object> Get(string[] keys)
 	    {
 		    throw new NotImplementedException();
 	    }

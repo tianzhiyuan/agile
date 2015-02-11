@@ -8,20 +8,9 @@ namespace Agile.Framework.Caching
 {
     public static class Extensions
     {
-        public static void AddOrUpdate(this ICache cache, string Key, object cacheObj, int minites)
+        public static void Set(this ICacheService cache, string key, object obj, int minutes)
         {
-            cache.AddOrUpdate(Key, cacheObj, new TimeSpan(0, minites, 0));
+	        cache.Set(key, obj, new TimeSpan(0, minutes, 0));
         }
-        public static void AddOrUpdate<T>(this ICache cache, T obj, int minites = 30) where T : class
-        {
-            var key = typeof(T).FullName;
-            cache.AddOrUpdate(key, obj, new TimeSpan(0, minites, 0));
-        }
-        public static T GetTypeCache<T>(this ICache cache) where T : class
-        {
-            var key = typeof(T).FullName;
-            return (T)cache.Get(key);
-        }
-		
     }
 }

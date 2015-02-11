@@ -61,11 +61,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Caching\Extensions.cs" />
-    <Compile Include="Caching\ICache.cs" />
+    <Compile Include="Caching\ICacheService.cs" />
     <Compile Include="Caching\ICachePolicy.cs" />
-    <Compile Include="Caching\MemoryCache.cs" />
+    <Compile Include="Caching\MemoryCacheService.cs" />
     <Compile Include="Complilation\Compiler.cs" />
-    <Compile Include="Components\CacheProvider.cs" />
     <Compile Include="Data\ConfigExtensions.cs" />
     <Compile Include="Data\DataServiceEventArgs.cs" />
     <Compile Include="Data\EfDataService.cs" />
