@@ -113,6 +113,7 @@
     <Compile Include="Tasks\ITrigger.cs" />
     <Compile Include="Tasks\TaskExecutionArgs.cs" />
     <Compile Include="Tasks\TaskExecutionContext.cs" />
+    <Compile Include="WebHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">

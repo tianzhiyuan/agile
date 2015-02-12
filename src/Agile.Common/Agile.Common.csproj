@@ -50,7 +50,6 @@
     <Compile Include="Logging\EmptyLoggerFactory.cs" />
     <Compile Include="Logging\ILoggerFactory.cs" />
     <Compile Include="Utilities\CombGuid.cs" />
-    <Compile Include="WebHelper.cs" />
     <Compile Include="Components\ComponentAttribute.cs" />
     <Compile Include="Components\IObjectContainer.cs" />
     <Compile Include="Components\ObjectContainer.cs" />
