@@ -1,10 +1,6 @@
 Jobs need to be done:
-1. Templating
-2. Email Sending
-3. SMS Sending
 4. Ftp helper
 5. Excel Helper
-6. Captcha
 7. Identity or membership
 8. Cookie helper
 9. Full-text search(Lucene?)
@@ -16,3 +12,9 @@ and many other front-end libraries.
 Features need to improve:
 1. Auto install
 2. Scheduling
+
+
+Features that has been realized:
+1. Templating.	----- use razor engine
+2. Email sending.
+3. Captcha. ----- use CoolCaptcha.NET

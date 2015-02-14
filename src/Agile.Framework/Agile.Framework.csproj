@@ -22,6 +22,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -52,6 +53,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Transactions" />
     <Reference Include="System.Web" />
@@ -71,6 +73,8 @@
     <Compile Include="Caching\ICacheService.cs" />
     <Compile Include="Caching\ICachePolicy.cs" />
     <Compile Include="Caching\MemoryCacheService.cs" />
+    <Compile Include="Captcha\FontConfig.cs" />
+    <Compile Include="Captcha\SimpleCaptcha.cs" />
     <Compile Include="Complilation\Compiler.cs" />
     <Compile Include="Data\ConfigExtensions.cs" />
     <Compile Include="Data\DataServiceEventArgs.cs" />
@@ -113,6 +117,8 @@
     <Compile Include="Settings\SettingHelper.cs" />
     <Compile Include="Settings\SettingDescriptor.cs" />
     <Compile Include="Settings\SettingProvider.cs" />
+    <Compile Include="SMS\ISMSSender.cs" />
+    <Compile Include="SMS\SMSMessage.cs" />
     <Compile Include="Tasks\Impl\AbstractTask.cs" />
     <Compile Include="Tasks\Impl\AbstractTrigger.cs" />
     <Compile Include="Tasks\Impl\DailyTrigger.cs" />
@@ -142,6 +148,15 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+    <None Include="Resources\Fonts\AntykwaBold.ttf" />
+    <None Include="Resources\Fonts\Candice.ttf" />
+    <None Include="Resources\Fonts\DingDongDaddyO.ttf" />
+    <None Include="Resources\Fonts\Duality.ttf" />
+    <None Include="Resources\Fonts\Heineken.ttf" />
+    <None Include="Resources\Fonts\Jura.ttf" />
+    <None Include="Resources\Fonts\StayPuft.ttf" />
+    <None Include="Resources\Fonts\TimesNewRomanBold.ttf" />
+    <None Include="Resources\Fonts\VeraSansBold.ttf" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

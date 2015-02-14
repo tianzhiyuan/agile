@@ -61,6 +61,66 @@ namespace Agile.Framework.Properties {
         }
         
         /// <summary>
+        ///   查找 System.Byte[] 类型的本地化资源。
+        /// </summary>
+        internal static byte[] AntykwaBold {
+            get {
+                object obj = ResourceManager.GetObject("AntykwaBold", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Byte[] 类型的本地化资源。
+        /// </summary>
+        internal static byte[] Candice {
+            get {
+                object obj = ResourceManager.GetObject("Candice", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Byte[] 类型的本地化资源。
+        /// </summary>
+        internal static byte[] DingDongDaddyO {
+            get {
+                object obj = ResourceManager.GetObject("DingDongDaddyO", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Byte[] 类型的本地化资源。
+        /// </summary>
+        internal static byte[] Duality {
+            get {
+                object obj = ResourceManager.GetObject("Duality", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Byte[] 类型的本地化资源。
+        /// </summary>
+        internal static byte[] Heineken {
+            get {
+                object obj = ResourceManager.GetObject("Heineken", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Byte[] 类型的本地化资源。
+        /// </summary>
+        internal static byte[] Jura {
+            get {
+                object obj = ResourceManager.GetObject("Jura", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 任务执行结束事件回调出错。任务key:{0},Name:{1} 的本地化字符串。
         /// </summary>
         internal static string Schedule_AfterTaskRunningEventError {
@@ -106,6 +166,26 @@ namespace Agile.Framework.Properties {
         }
         
         /// <summary>
+        ///   查找 System.Byte[] 类型的本地化资源。
+        /// </summary>
+        internal static byte[] StayPuft {
+            get {
+                object obj = ResourceManager.GetObject("StayPuft", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Byte[] 类型的本地化资源。
+        /// </summary>
+        internal static byte[] TimesNewRomanBold {
+            get {
+                object obj = ResourceManager.GetObject("TimesNewRomanBold", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 终止时间不可以早于当前时间 的本地化字符串。
         /// </summary>
         internal static string Trigger_EndTimeEarlyThanCurrent {
@@ -138,6 +218,16 @@ namespace Agile.Framework.Properties {
         internal static string Trigger_RepeatCountNoLessThanOne {
             get {
                 return ResourceManager.GetString("Trigger_RepeatCountNoLessThanOne", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Byte[] 类型的本地化资源。
+        /// </summary>
+        internal static byte[] VeraSansBold {
+            get {
+                object obj = ResourceManager.GetObject("VeraSansBold", resourceCulture);
+                return ((byte[])(obj));
             }
         }
     }
