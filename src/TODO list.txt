@@ -17,4 +17,4 @@ Features need to improve:
 Features that has been realized:
 1. Templating.	----- use razor engine
 2. Email sending.
-3. Captcha. ----- use CoolCaptcha.NET
+3. Captcha. ----- use CoolCaptcha.NET https://github.com/starpeng/CoolCaptcha.NET
