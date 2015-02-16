@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CookieHelper.cs" />
     <Compile Include="Mvc\BaseController.cs" />
     <Compile Include="Mvc\FilterErrorAttribute.cs" />
     <Compile Include="Mvc\Pagination.cs" />
