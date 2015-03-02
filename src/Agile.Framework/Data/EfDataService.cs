@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
 using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Transactions;
 using Agile.Common.Data;
 using Agile.Common.Utilities;
 
@@ -207,21 +209,20 @@ namespace Agile.Framework.Data
 				}
 				//do some query
 				source = query.DoQuery(source);
+				var isNolock = query.IsNoLock ?? false;
 				var queryMode = query.Mode??QueryMode.Both;
-				bool isNoTracking = query.IsNoTracking ?? true;
 				if (queryMode == QueryMode.CountOnly)
 				{
-					query.CountOfResultSet = source.Count();
+					query.CountOfResultSet = isNolock ? source.CountReadUncommitted() : source.Count();
 					return result;
 				}
-				if (isNoTracking)
-				{
-					source = source.AsNoTracking();
-				}
+				
+				source = source.AsNoTracking();
+				
 
 				if (queryMode == QueryMode.Both)
 				{
-					query.CountOfResultSet = source.Count();
+					query.CountOfResultSet = isNolock ? source.CountReadUncommitted() : source.Count();
 				}
 
 				if (query.Skip > 0)
@@ -237,7 +238,7 @@ namespace Agile.Framework.Data
 
 				if (!(query.Take <= 0))
 				{
-					result = source.ToList();
+					result = isNolock ? source.ToListReadUncommitted() : source.ToList();
 				}
 				
 				return result;
@@ -252,6 +253,7 @@ namespace Agile.Framework.Data
 				return source;
 			}
 		}
+
 		#region IModelService Members
 
 		IEnumerable<TModel> IModelService.Select<TModel>(BaseEntityQuery<TModel> query) 
@@ -275,5 +277,28 @@ namespace Agile.Framework.Data
         }
 
         #endregion
+	}
+
+	internal static class ReadUncommittedExtension
+	{
+		public static int CountReadUncommitted<T>(this IQueryable<T> query)
+		{
+			using (var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions() { IsolationLevel = System.Transactions.IsolationLevel.ReadUncommitted }))
+			{
+				int toReturn = query.Count();
+				scope.Complete();
+				return toReturn;
+			}
+		}
+
+		public static List<T> ToListReadUncommitted<T>(this IQueryable<T> query)
+		{
+			using (var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions() { IsolationLevel = System.Transactions.IsolationLevel.ReadUncommitted }))
+			{
+				List<T> toReturn = query.ToList();
+				scope.Complete();
+				return toReturn;
+			}
+		}
 	}
 }

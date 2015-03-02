@@ -69,13 +69,13 @@ namespace Agile.Common.Data
 		/// </summary>
 		public QueryMode? Mode { get; set; }
 		/// <summary>
-		/// enity framework feature. default true
-		/// </summary>
-		public bool? IsNoTracking { get; set; }
-		/// <summary>
 		/// corresponding entity type 
 		/// </summary>
 		public abstract Type ModelType { get; }
+		/// <summary>
+		/// indicates whether this query use nolock. (readuncommited)
+		/// </summary>
+		public bool? IsNoLock { get; set; }
 		#endregion
 	}
 	[Serializable]
