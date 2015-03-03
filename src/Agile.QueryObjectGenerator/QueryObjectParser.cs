@@ -13,7 +13,7 @@ namespace Agile.QueryObjectGenerator
 	public class QueryObjectParser
 	{
 		public static readonly string SourceParamName = "source";
-		public static readonly string QueryFuncName = "DoQuery";
+		public static readonly string QueryFuncName = "Apply";
 		static QueryObjectParser()
 		{
 			Analyzers = new IAnalyzer[]

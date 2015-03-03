@@ -91,7 +91,7 @@ namespace Agile.Common.Data
 		/// </summary>
 		/// <param name="source"></param>
 		/// <returns></returns>
-		public virtual IQueryable<TModel> DoQuery(IQueryable<TModel> source)
+		public virtual IQueryable<TModel> Apply(IQueryable<TModel> source)
 		{
 			return source;
 		}

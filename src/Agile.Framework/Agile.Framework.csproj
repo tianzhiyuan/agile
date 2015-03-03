@@ -44,6 +44,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
+    <Reference Include="EntityFramework.Extended">
+      <HintPath>..\packages\EntityFramework.Extended.6.1.0.133\lib\net45\EntityFramework.Extended.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
@@ -79,15 +82,18 @@
     <Compile Include="Data\ConfigExtensions.cs" />
     <Compile Include="Data\DataServiceEventArgs.cs" />
     <Compile Include="Data\EfDataService.cs" />
+    <Compile Include="Data\EfRepository.cs" />
+    <Compile Include="Data\IDbContextFactory.cs" />
+    <Compile Include="Data\IPagingOption.cs" />
+    <Compile Include="Data\IRepository.cs" />
     <Compile Include="Data\PartialFiller.cs" />
+    <Compile Include="Data\PagingOption.cs" />
+    <Compile Include="Data\RepositoryExtensions.cs" />
     <Compile Include="Email\Email.cs" />
     <Compile Include="Email\IEmailSender.cs" />
     <Compile Include="Email\ITemplateRenderer.cs" />
     <Compile Include="Email\RazorRenderer.cs" />
     <Compile Include="Email\SmtpSender.cs" />
-    <Compile Include="Events\IEvent.cs" />
-    <Compile Include="Events\IPublisher.cs" />
-    <Compile Include="Events\ISubscriber.cs" />
     <Compile Include="Data\IModelService.cs" />
     <Compile Include="Data\DataService.cs" />
     <Compile Include="Data\Extensions.cs" />
@@ -100,10 +106,6 @@
     <Compile Include="Install\CreateTableIfNotExistsMsSql.cs" />
     <Compile Include="Install\CreateTableIfNotExistsMySql.cs" />
     <Compile Include="Install\IInstallService.cs" />
-    <Compile Include="Module\AbstractModule.cs" />
-    <Compile Include="Module\IModule.cs" />
-    <Compile Include="Plugins\AbstractPlugin.cs" />
-    <Compile Include="Plugins\IPlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>

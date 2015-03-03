@@ -55,6 +55,7 @@ namespace Agile.Framework.Data
 			var db = handler(NameOrConnectionString);
 			db.Configuration.AutoDetectChangesEnabled = false;
 			db.Configuration.ProxyCreationEnabled = false;
+			
 			return db;
 		}
 
@@ -201,6 +202,7 @@ namespace Agile.Framework.Data
 			using (var db = GetContext())
 			{
 				var source = db.Set<TModel>() as IQueryable<TModel>;
+				
 				IEnumerable<TModel> result = Enumerable.Empty<TModel>();
 
 				if (query.Includes != null && query.Includes.Any())
@@ -208,7 +210,7 @@ namespace Agile.Framework.Data
 					source = query.Includes.Aggregate(source, (current, include) => current.Include(include));
 				}
 				//do some query
-				source = query.DoQuery(source);
+				source = query.Apply(source);
 				var isNolock = query.IsNoLock ?? false;
 				var queryMode = query.Mode??QueryMode.Both;
 				if (queryMode == QueryMode.CountOnly)
