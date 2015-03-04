@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="Logging\EmptyLoggerFactory.cs" />
     <Compile Include="Logging\ILoggerFactory.cs" />
+    <Compile Include="Utilities\CNYSignConverter.cs" />
     <Compile Include="Utilities\CombGuid.cs" />
     <Compile Include="Components\ComponentAttribute.cs" />
     <Compile Include="Components\IObjectContainer.cs" />
@@ -76,6 +77,7 @@
     <Compile Include="Serialization\IJsonSerializer.cs" />
     <Compile Include="Serialization\Json.cs" />
     <Compile Include="Exceptions\ViolationException.cs" />
+    <Compile Include="Utilities\NetUtils.cs" />
     <Compile Include="Utilities\ObjectUtils.cs" />
     <Compile Include="Utilities\RandomUtils.cs" />
     <Compile Include="Utilities\RegexPatterns.cs" />
@@ -89,6 +91,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

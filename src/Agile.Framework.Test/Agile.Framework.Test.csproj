@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CNYSignConverterTest.cs" />
     <Compile Include="FtpTest.cs" />
     <Compile Include="MemcachedTest.cs" />
     <Compile Include="PerformanceTest.cs" />

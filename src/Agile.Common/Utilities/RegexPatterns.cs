@@ -99,9 +99,9 @@ namespace Agile.Common.Utilities
         public const string Mobile = @"^0?(13[0-9]|15[012356789]|18[0123456789]|14[57])[0-9]{8}$";
 
         /// <summary>
-        /// Zip Pattern
+        /// Zip Code Pattern
         /// </summary>
-        public const string Zip = @"^[1-9][0-9]{5}$";
+        public const string ZipCode = @"^[1-9][0-9]{5}$";
 
     }
 }
