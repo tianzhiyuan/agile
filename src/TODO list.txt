@@ -2,7 +2,6 @@ Jobs need to be done:
 4. Ftp helper
 5. Excel Helper
 7. Identity or membership
-8. Cookie helper
 9. Full-text search(Lucene?)
 10. Picture helper
 11. Event-driven 
@@ -18,3 +17,4 @@ Features that has been realized:
 1. Templating.	----- use razor engine
 2. Email sending.
 3. Captcha. ----- use CoolCaptcha.NET https://github.com/starpeng/CoolCaptcha.NET
+4. Cookie helper
