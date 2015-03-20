@@ -21,7 +21,7 @@ namespace Agile.UI.Mvc
             if (error == null)
             {
                 var logger = ObjectContainer.Resolve<ILogger>();
-                logger.SafeLog(filterContext.Exception);
+                logger.Error(filterContext.Exception);
 
                 error = HttpContext.Current.IsDebuggingEnabled
                             ? new RuleViolatedException(filterContext.Exception.Message)

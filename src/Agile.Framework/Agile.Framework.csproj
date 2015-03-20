@@ -82,15 +82,8 @@
     <Compile Include="Data\ConfigExtensions.cs" />
     <Compile Include="Data\DataServiceEventArgs.cs" />
     <Compile Include="Data\DefaultDbContext.cs" />
-    <Compile Include="Data\DefaultDbContextFactory.cs" />
     <Compile Include="Data\EfDataService.cs" />
-    <Compile Include="Data\EfRepository.cs" />
-    <Compile Include="Data\IDbContextFactory.cs" />
-    <Compile Include="Data\IPagingOption.cs" />
-    <Compile Include="Data\IRepository.cs" />
     <Compile Include="Data\PartialFiller.cs" />
-    <Compile Include="Data\PagingOption.cs" />
-    <Compile Include="Data\RepositoryExtensions.cs" />
     <Compile Include="Email\Email.cs" />
     <Compile Include="Email\IEmailSender.cs" />
     <Compile Include="Email\ITemplateRenderer.cs" />

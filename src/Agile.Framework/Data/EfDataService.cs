@@ -9,6 +9,7 @@ using System.Linq.Expressions;
 using System.Transactions;
 using Agile.Common.Data;
 using Agile.Common.Utilities;
+using EntityFramework.Extensions;
 
 namespace Agile.Framework.Data
 {
@@ -186,6 +187,22 @@ namespace Agile.Framework.Data
             }
         }
 
+		public void UpdateBatch<TEntity>(Expression<Func<TEntity, TEntity>> updateProperties, Expression<Func<TEntity, bool>> predicate)where TEntity:class 
+		{
+			using (var db = GetContext())
+			{
+				db.Set<TEntity>().Where(predicate).Update(updateProperties);
+			}
+		}
+
+		public void DeleteBatch<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class 
+		{
+			using (var db = GetContext())
+			{
+				db.Set<TEntity>().Where(predicate).Delete();
+			}
+		}
+
         public string NameOrConnectionString { get; set; }
         public string ContextTypeString { get; set; }
 		public Type DbContextType { get; set; }
@@ -193,8 +210,7 @@ namespace Agile.Framework.Data
         {
             using (var db = GetContext())
             {
-                var source = db.Set<TModel>();
-                return source.SqlQuery(query, parameters).AsNoTracking().ToList();
+                return db.Database.SqlQuery<TModel>(query, parameters).ToList();
             }
         }
 		public IEnumerable<TModel> Select<TModel>(BaseEntityQuery<TModel> query) where TModel : BaseEntity

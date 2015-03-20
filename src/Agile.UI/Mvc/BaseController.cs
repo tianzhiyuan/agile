@@ -17,7 +17,7 @@ namespace Agile.UI.Mvc
     public class BaseController : Controller
     {
         protected readonly IModelService Service = ObjectContainer.Resolve<IModelService>();
-
+	    private ILogger _logger;
         protected virtual string UserKey
         {
             get { return "UserID"; }
@@ -30,19 +30,15 @@ namespace Agile.UI.Mvc
         {
             Session[UserKey] = logObj;
         }
-        protected void Log(object obj, LogLevel level = LogLevel.Info, Exception ex = null)
-        {
-            try
-            {
-                var logger = ObjectContainer.Resolve<ILogger>();
-                logger.Log(level, obj, ex);
-            }
-            catch { }
-        }
+        
         public BaseController()
         {
             bool.TryParse(ConfigurationManager.AppSettings["DoAuth"], out DoAuth);
         }
+		public BaseController(ILoggerFactory factory)
+		{
+			_logger = factory.Create(this.GetType());
+		}
         protected bool DoAuth;
         protected int UserID
         {
