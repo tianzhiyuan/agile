@@ -40,6 +40,12 @@
     <Reference Include="AutoMapper.Net4">
       <HintPath>..\packages\AutoMapper.3.2.1\lib\net40\AutoMapper.Net4.dll</HintPath>
     </Reference>
+    <Reference Include="Dapper">
+      <HintPath>..\packages\Dapper.1.39\lib\net45\Dapper.dll</HintPath>
+    </Reference>
+    <Reference Include="DapperExtensions">
+      <HintPath>..\packages\DapperExtensions.1.4.4\lib\net40\DapperExtensions.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
@@ -79,10 +85,15 @@
     <Compile Include="Captcha\FontConfig.cs" />
     <Compile Include="Captcha\SimpleCaptcha.cs" />
     <Compile Include="Complilation\Compiler.cs" />
+    <Compile Include="Data\DapperRepository.cs" />
     <Compile Include="Data\ConfigExtensions.cs" />
     <Compile Include="Data\DataServiceEventArgs.cs" />
     <Compile Include="Data\DefaultDbContext.cs" />
     <Compile Include="Data\EfDataService.cs" />
+    <Compile Include="Data\EfRepository.cs" />
+    <Compile Include="Data\IDbConnectionFactory.cs" />
+    <Compile Include="Data\IDbContextFactory.cs" />
+    <Compile Include="Data\IRepository.cs" />
     <Compile Include="Data\PartialFiller.cs" />
     <Compile Include="Email\Email.cs" />
     <Compile Include="Email\IEmailSender.cs" />
@@ -90,7 +101,6 @@
     <Compile Include="Email\RazorRenderer.cs" />
     <Compile Include="Email\SmtpSender.cs" />
     <Compile Include="Data\IModelService.cs" />
-    <Compile Include="Data\DataService.cs" />
     <Compile Include="Data\Extensions.cs" />
     <Compile Include="File\Impl\FtpFileService.cs" />
     <Compile Include="File\Impl\LocalFileService.cs" />

@@ -48,7 +48,7 @@ namespace Agile.Framework.Data
 
         public static Configuration UseDataServiceDefaultFiller(this Configuration configuration)
         {
-            var svc = ObjectContainer.Resolve<IModelService>() as DataService;
+            var svc = ObjectContainer.Resolve<IModelService>() as EfDataService;
             if (svc != null)
             {
                 svc.BeforeUpdate += FillDefaultUpdate;

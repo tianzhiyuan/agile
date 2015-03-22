@@ -7,17 +7,16 @@ using Agile.Common.Data;
 
 namespace Agile.Framework.Data
 {
-	public interface IRepository<TEntity> where TEntity : class
-	{
-		TEntity Find(object id);
-		bool Insert(TEntity entity);
-		bool Update(TEntity entity);
-		bool Delete(object key);
-	}
-	public interface IRepository<TEntity, TEntityQuery> : IRepository<TEntity>
+	public interface IRepository<TEntity, TEntityQuery> 
 		where TEntity : BaseEntity
 		where TEntityQuery : BaseEntityQuery<TEntity>
 	{
+		TEntity Find(int id);
+		IEnumerable<TEntity> Find(int[] idList);
 		IEnumerable<TEntity> FindMany(TEntityQuery filters);
+		void Insert(TEntity entity);
+		void Update(TEntity entity);
+		void Delete(int key);
 	}
+	
 }
