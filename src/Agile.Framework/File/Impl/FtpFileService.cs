@@ -29,16 +29,16 @@ namespace Agile.Framework.File.Impl
 			this._logger = factory.Create(typeof (FtpFileService));
 			this._service = service;
 		}
-		private FtpWebRequest CreateRequest(string path)
+		private FtpWebRequest CreateRequest(string relativePath)
 		{
-			var ftpRequest = (FtpWebRequest) WebRequest.Create(new UriBuilder(ServerAddr){Path = path}.ToString());
+			var ftpRequest = (FtpWebRequest) WebRequest.Create(new UriBuilder(ServerAddr){Path = relativePath}.ToString());
 			ftpRequest.Credentials = new NetworkCredential(Username, Password);
 			ftpRequest.UseBinary = true;
 			return ftpRequest;
 		}
-		private bool DirectoryExists(string path)
+		private bool DirectoryExists(string relativePath)
 		{
-			var ftpRequest = CreateRequest(path);
+			var ftpRequest = CreateRequest(relativePath);
 			ftpRequest.Method = WebRequestMethods.Ftp.ListDirectory;
 			try
 			{
@@ -54,9 +54,23 @@ namespace Agile.Framework.File.Impl
 			}
 			return true;
 		}
-		private void MakeDirectory(string path)
+
+		private void MakeSureDirectoryExist(string relativePath)
 		{
-			var ftpRequest = CreateRequest(path);
+			var segments = relativePath.Split(new char[] {Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar});
+			int length = segments.Length;
+			for (var index = 1; index < length; index++)
+			{
+				var directory = Path.Combine(segments.Take(index).ToArray());
+				if (!DirectoryExists(directory))
+				{
+					MakeDirectory(directory);
+				}
+			}
+		}
+		private void MakeDirectory(string relativePath)
+		{
+			var ftpRequest = CreateRequest(relativePath);
 			ftpRequest.Method = WebRequestMethods.Ftp.MakeDirectory;
 			try
 			{
@@ -70,6 +84,13 @@ namespace Agile.Framework.File.Impl
 			{
 				
 			}
+		}
+		private string GetRelativePath(string fileHandle)
+		{
+			return Path.Combine(fileHandle.Substring(0, 3),
+			                    fileHandle.Substring(3, 4),
+			                    fileHandle.Substring(7, 4),
+			                    fileHandle.Substring(11));
 		}
 		private const string Clist = "0123456789abcdefghijklmnopqrstuvwxyz-_";
 		private static readonly char[] Clistarr = Clist.ToCharArray();
@@ -87,21 +108,28 @@ namespace Agile.Framework.File.Impl
 		{
 			return (long)(current - new DateTime(current.Year, current.Month, 1)).TotalMilliseconds;
 		}
+		private static long GetMillisecondsOfADay(DateTime current)
+		{
+			return (long) (current - new DateTime(current.Year, current.Month, current.Day)).TotalMilliseconds;
+		}
+		
 		#region Public Methods
 		public string Create(byte[] data, string filename)
 		{
 			var extension = Path.GetExtension(filename);
 			var fileType = FileTypeUtil.DeduceFileTypeFromExtension(extension);
 			var now = DateTime.Now;
-			//路径: [文件类型]/[年月]/文件句柄.后缀
+			//路径: [文件类型]/[年]/[月日]/[毫秒][随机串].后缀
 			//文件句柄: 文件类型年月随机字符串.后缀
 			//其中文件类型取类型名称的前三个字符，命名时应该注意！
 			var fileTypeName = fileType.ToString().Substring(0, 3).PadLeft(3, '0');
-			var middleName = string.Format("{0:yyyyMM}", DateTime.Now);
+			var year = string.Format("{0:yyyy}", now);
+			var monthAndDay = string.Format("{0:MMdd}", now);
 			//3+6+6+12
-			var rand = string.Format("{0}{1,12}", Encode(GetMillisecondsOfAMonth(now)),
-			                         Guid.NewGuid().ToString().Replace("-", ""));
-			var fileHandle = string.Format("{0}{1}{2}{3}", fileTypeName, middleName, rand, extension);
+			var fileName = string.Format("{0}{1,12}{2}", Encode(GetMillisecondsOfADay(now)),
+			                             Guid.NewGuid().ToString().Replace("-", ""),
+			                             extension);
+			var fileHandle = string.Format("{0}{1}{2}{3}", fileTypeName, year, monthAndDay, fileName);
 			var file = new File()
 			{
 				Handle = fileHandle,
@@ -115,16 +143,20 @@ namespace Agile.Framework.File.Impl
 			//save it
 			try
 			{
-				var directory = Path.Combine(fileTypeName, middleName);
+				var directory = Path.Combine(fileTypeName, year, monthAndDay);
 				if (!DirectoryExists(directory))
 				{
-					if (!DirectoryExists(fileTypeName))
+					if (!DirectoryExists(Path.Combine(fileTypeName, year)))
 					{
-						MakeDirectory(fileTypeName);
+						if (!DirectoryExists(fileTypeName))
+						{
+							MakeDirectory(fileTypeName);
+						}
+						MakeDirectory(Path.Combine(fileTypeName, year));
 					}
 					MakeDirectory(directory);
 				}
-				var ftpRequest = CreateRequest(Path.Combine(directory, fileHandle));
+				var ftpRequest = CreateRequest(Path.Combine(directory, fileName));
 				ftpRequest.Method = WebRequestMethods.Ftp.UploadFile;
 				ftpRequest.ContentLength = data.Length;
 				using (var requestStream = ftpRequest.GetRequestStream())
@@ -147,7 +179,7 @@ namespace Agile.Framework.File.Impl
 
 		public bool Delete(string fileHandle)
 		{
-			var request = CreateRequest(Path.Combine(fileHandle.Substring(0, 3), fileHandle.Substring(3, 6), fileHandle));
+			var request = CreateRequest(GetRelativePath(fileHandle));
 			//delete file from disk
 			try
 			{
@@ -174,7 +206,7 @@ namespace Agile.Framework.File.Impl
 
 		public string GetAccessUrl(string fileHandle)
 		{
-			var path = string.Format("/{0}/{1}/{2}", fileHandle.Substring(0, 3), fileHandle.Substring(3, 6), fileHandle);
+			var path = GetRelativePath(fileHandle);
 			return new UriBuilder(AccessUrlRoot) { Path = path }.ToString();
 		}
 
