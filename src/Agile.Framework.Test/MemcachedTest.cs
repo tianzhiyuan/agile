@@ -11,13 +11,7 @@ namespace Agile.Framework.Test
 	[TestFixture]
 	public class MemcachedTest
 	{
-		[Test]
-		public void Test()
-		{
-			var client = new Memcached.Memcached();
-			//client.AddOrUpdate("test", 1, 1);
-			Assert.AreEqual(client.Get("test"), 1);
-		}
+		
 
 		[Test]
 		public void Test1()

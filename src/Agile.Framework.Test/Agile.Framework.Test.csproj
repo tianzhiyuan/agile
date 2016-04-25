@@ -63,10 +63,6 @@
       <Project>{77128248-6afc-4be6-837e-6da8703ada30}</Project>
       <Name>Agile.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Agile.Framework.Memcached\Agile.Framework.Memcached.csproj">
-      <Project>{59c93f55-81cc-4b23-b592-9d3cda658e57}</Project>
-      <Name>Agile.Framework.Memcached</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Agile.Framework\Agile.Framework.csproj">
       <Project>{d31c25dd-b900-42f6-9ba6-2e30ba039671}</Project>
       <Name>Agile.Framework</Name>

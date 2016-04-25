@@ -4,7 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Agile.Common.Utilities;
+using Agile.Common.Utils;
 using NUnit.Framework;
 
 namespace Agile.Framework.Test

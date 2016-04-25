@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Agile.Common.Components;
 using Agile.Common.Serialization;
-using Agile.Common.Utilities;
+using Agile.Common.Utils;
 
 namespace Agile.Common.Configurations
 {

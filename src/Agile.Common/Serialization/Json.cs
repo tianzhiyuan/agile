@@ -11,19 +11,21 @@ namespace Agile.Common.Serialization
     public class Json : IJsonSerializer
     {
         private readonly JsonSerializer _serializer;
+        private readonly JsonSerializerSettings _settings = new JsonSerializerSettings()
+        {
+            NullValueHandling = NullValueHandling.Ignore,
+            ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+        };
         public Json()
         {
             _serializer = new JsonSerializer()
-                {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                };
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+            };
         }
         public string Serialize(object obj)
         {
-            var settings = new JsonSerializerSettings();
-            settings.NullValueHandling = NullValueHandling.Ignore;
-            settings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-            return JsonConvert.SerializeObject(obj, settings);
+            return JsonConvert.SerializeObject(obj, _settings);
         }
 
         public TData Deserialize<TData>(string data)
@@ -31,6 +33,14 @@ namespace Agile.Common.Serialization
             using (var reader = new JsonTextReader(new StringReader(data)))
             {
                 return this._serializer.Deserialize<TData>(reader);
+            }
+        }
+
+        public object Deserialize(string data, Type type)
+        {
+            using (var reader = new JsonTextReader(new StringReader(data)))
+            {
+                return this._serializer.Deserialize(reader, type);
             }
         }
     }

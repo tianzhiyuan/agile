@@ -33,6 +33,10 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=4.2.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.4.2.1\lib\net45\AutoMapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -53,8 +57,9 @@
     <Compile Include="Logging\EmptyLoggerFactory.cs" />
     <Compile Include="Logging\ILoggerFactory.cs" />
     <Compile Include="Logging\LoggerFactory.cs" />
-    <Compile Include="Utilities\CNYSignConverter.cs" />
-    <Compile Include="Utilities\CombGuid.cs" />
+    <Compile Include="Utils\CNYSignConverter.cs" />
+    <Compile Include="Utils\CollectionUtil.cs" />
+    <Compile Include="Utils\CombGuid.cs" />
     <Compile Include="Components\ComponentAttribute.cs" />
     <Compile Include="Components\IObjectContainer.cs" />
     <Compile Include="Components\ObjectContainer.cs" />
@@ -79,11 +84,18 @@
     <Compile Include="Serialization\IJsonSerializer.cs" />
     <Compile Include="Serialization\Json.cs" />
     <Compile Include="Exceptions\BusinessException.cs" />
-    <Compile Include="Utilities\NetUtils.cs" />
-    <Compile Include="Utilities\ObjectUtils.cs" />
-    <Compile Include="Utilities\RandomUtils.cs" />
-    <Compile Include="Utilities\RegexPatterns.cs" />
-    <Compile Include="Utilities\TypeUtils.cs" />
+    <Compile Include="Utils\DateUtil.cs" />
+    <Compile Include="Utils\EnumUtil.cs" />
+    <Compile Include="Utils\ExcelUtil.cs" />
+    <Compile Include="Utils\MimeTypeUtil.cs" />
+    <Compile Include="Utils\NetUtils.cs" />
+    <Compile Include="Utils\NumberUtil.cs" />
+    <Compile Include="Utils\ObjectUtils.cs" />
+    <Compile Include="Utils\RandomUtils.cs" />
+    <Compile Include="Utils\RegexPatterns.cs" />
+    <Compile Include="Utils\StringUtil.cs" />
+    <Compile Include="Utils\TypeFinder.cs" />
+    <Compile Include="Utils\TypeUtils.cs" />
     <Compile Include="WireUp.cs" />
   </ItemGroup>
   <ItemGroup>
