@@ -54,9 +54,18 @@
     <Compile Include="Components\AutowireAttibute.cs" />
     <Compile Include="Data\IOperator.cs" />
     <Compile Include="Data\QueryResult.cs" />
+    <Compile Include="File\FileMetadata.cs" />
+    <Compile Include="File\FileType.cs" />
+    <Compile Include="File\FileTypeUtil.cs" />
+    <Compile Include="File\IFileService.cs" />
     <Compile Include="Logging\EmptyLoggerFactory.cs" />
     <Compile Include="Logging\ILoggerFactory.cs" />
     <Compile Include="Logging\LoggerFactory.cs" />
+    <Compile Include="Message\BaseListener.cs" />
+    <Compile Include="Message\DefaultMessageBus.cs" />
+    <Compile Include="Message\IListener.cs" />
+    <Compile Include="Message\IMessageBus.cs" />
+    <Compile Include="Message\MessageBusInitializer.cs" />
     <Compile Include="Utils\CNYSignConverter.cs" />
     <Compile Include="Utils\CollectionUtil.cs" />
     <Compile Include="Utils\CombGuid.cs" />
@@ -73,7 +82,6 @@
     <Compile Include="IAssemblyInitializer.cs" />
     <Compile Include="Logging\ILogger.cs" />
     <Compile Include="Logging\EmptyLogger.cs" />
-    <Compile Include="Message\IMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
