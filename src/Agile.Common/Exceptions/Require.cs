@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Agile.Common.Data;
-using Agile.Common.Properties;
 
 namespace Agile.Common.Exceptions
 {
@@ -18,86 +15,125 @@ namespace Agile.Common.Exceptions
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Trace.TraceError(ex.ToString());
+                Trace.TraceError(ex.ToString());
             }
         }
 
-        public static void NotNullOrEmpty(string source, string name)
+        /// <summary>
+        /// 指定值不为空
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="value">指定值</param>
+        /// <param name="name">名称</param>
+        public static void NotNullOrEmpty<T>(T? value, string name) where T : struct
         {
-            if (string.IsNullOrEmpty(source))
+            if (value == null)
             {
-                throw RuleViolatedException.ArgumentNull(name);
+                throw new BusinessException($"{name}不能为空");
             }
         }
-        public static void NotNullOrEmpty<T>(IEnumerable<T> source, string name)
+        /// <summary>
+        /// 指定值不为空
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="name"></param>
+        public static void NotNullOrEmpty(string value, string name)
         {
-            if (source == null || !source.Any())
+            if (string.IsNullOrEmpty(value))
             {
-                throw RuleViolatedException.ArgumentNull(name);
+                throw new BusinessException($"{name}不能为空");
             }
         }
-        public static void NotNull<T>(T? source, string name)
-            where T : struct
+        /// <summary>
+        /// 指定数组不为空
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="value"></param>
+        /// <param name="name"></param>
+        public static void NotNullOrEmpty<T>(T[] value, string name)
         {
-            if (source == null)
+            if (value == null || value.Length == 0)
             {
-                throw RuleViolatedException.ArgumentNull(name);
+                throw new BusinessException($"{name}不能为空");
             }
         }
-        public static void NotNull(object obj, string name)
+        /// <summary>
+        /// 指定值不为null
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="value"></param>
+        /// <param name="name"></param>
+        public static void NotNull<T>(T value, string name) where T : class
         {
-            if (obj == null)
+            if (value == null)
             {
-                throw RuleViolatedException.ArgumentNull(name);
+                throw new BusinessException($"{name}不能为空");
             }
         }
-        public static void LengthWithin<T>(IEnumerable<T> source, int min, int max, string name)
+        /// <summary>
+        /// 指定decimal比0大
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="name"></param>
+        public static void LargerThanZero(decimal value, string name)
         {
-            if (source == null) return;
-            int length = source.Count();
-            if (length < min || length > max)
+            if (!(value > 0))
             {
-                throw new RuleViolatedException(string.Format(Resources.RuleViolated_LengthOutOfRange, name, min, max),
-                                                RuleViolatedType.ArgumentError);
+                throw new BusinessException($"{name}必须大于0");
             }
+        }
+        /// <summary>
+        /// 指定int比0大
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="name"></param>
+        public static void LargerThanZero(int value, string name)
+        {
+            if (!(value > 0))
+            {
+                throw new BusinessException($"{name}必须大于0");
+            }
+        }
 
-        }
-        public static void LengthWithin<T>(IEnumerable<T> source, int max, string name)
+        public static void RangeWithin(decimal value, decimal min, decimal max, string name)
         {
-            LengthWithin(source, 0, max, name);
-        }
-        public static void WithinRange<T>(IComparable<T> source, T min, T max, string name)
-        {
-            if (source == null) return;
-            if (source.CompareTo(min) < 0 || source.CompareTo(max) > 0)
+            if (!(value > min && value < max))
             {
-                throw new RuleViolatedException(string.Format(Resources.RuleViolated_OutOfRange, name, min, max),
-                                                 RuleViolatedType.ArgumentError);
+                throw new BusinessException($"{name}必须在 {min}~{max}之间");
             }
         }
-        public static void WithinRange<T>(IComparable<T> source, T max, string name)
+
+        public static void RangeWithin(int value, int min, int max, string name)
         {
-            WithinRange(source, default(T), max, name);
-        }
-        public static void That(bool condition, string message)
-        {
-            if (!condition)
+            if (!(value > min && value < max))
             {
-                throw new RuleViolatedException(message);
+                throw new BusinessException($"{name}必须在 {min}~{max}之间");
             }
         }
-        public static void Duplicated<T>(T left, T right, string name) where T : IComparable
+
+        public static void LengthWithin<T>(IEnumerable<T> collection, int minSize, int maxSize, string name)
         {
-            if (left.CompareTo(right) == 0)
+            if (collection == null)
             {
-                throw new RuleViolatedException(string.Format(Resources.RuleViolated_Duplicated, name));
+                return;
+            }
+            var count = collection.Count();
+            if (!(count > minSize && count < maxSize))
+            {
+                throw new BusinessException($"{name}的长度必须在{minSize}~{maxSize}之间");
             }
         }
-        public static void Duplicate<TModel>(TModel left, TModel right, string name) where TModel : BaseEntity
+
+        public static void LengthWithin<T>(IEnumerable<T> collection, int maxSize, string name)
         {
-            if (left == right)
+            if (collection == null)
             {
-                throw new RuleViolatedException(string.Format(Resources.RuleViolated_Duplicated, name));
+                return;
+            }
+            var count = collection.Count();
+            if (count >= maxSize)
+            {
+                throw new BusinessException($"{name}的长度必须小于{maxSize}");
             }
         }
     }

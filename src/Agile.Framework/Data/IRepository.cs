@@ -9,7 +9,7 @@ namespace Agile.Framework.Data
 {
 	public interface IRepository<TEntity, TEntityQuery> 
 		where TEntity : BaseEntity
-		where TEntityQuery : BaseEntityQuery<TEntity>
+		where TEntityQuery : BaseQuery<TEntity>
 	{
 		TEntity Find(int id);
 		IEnumerable<TEntity> Find(int[] idList);

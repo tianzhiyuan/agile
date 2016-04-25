@@ -22,7 +22,7 @@ namespace Agile.Framework.Data
         /// <returns>当前数据库中的对象拷贝</returns>
         public static TModel Fill<TModel, TQuery>(TModel model)
             where TModel: BaseEntity
-            where TQuery:BaseEntityQuery<TModel>,new()
+            where TQuery:BaseQuery<TModel>,new()
         {
             if (model == null || model.Id == null) return model;
             var query = new TQuery() {Id = model.Id};
@@ -39,7 +39,7 @@ namespace Agile.Framework.Data
         /// <returns>当前数据库中的对象拷贝</returns>
         public static TModel[]  Fill<TModel, TQuery>(TModel[] models)
             where TModel :  BaseEntity
-            where TQuery : BaseEntityQuery<TModel>, new()
+            where TQuery : BaseQuery<TModel>, new()
         {
             if (models == null || !models.Any()) return new TModel[0];
             var query = new TQuery() {IdList = models.Select(o => o.Id).OfType<int>().ToArray()};

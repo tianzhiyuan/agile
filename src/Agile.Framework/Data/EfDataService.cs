@@ -213,7 +213,7 @@ namespace Agile.Framework.Data
                 return db.Database.SqlQuery<TModel>(query, parameters).ToList();
             }
         }
-		public IEnumerable<TModel> Select<TModel>(BaseEntityQuery<TModel> query) where TModel : BaseEntity
+		public IEnumerable<TModel> Select<TModel>(BaseQuery<TModel> query) where TModel : BaseEntity
 		{
 			using (var db = GetContext())
 			{
@@ -227,21 +227,7 @@ namespace Agile.Framework.Data
 				}
 				//do some query
 				source = query.Apply(source);
-				var isNolock = query.IsNoLock ?? false;
-				var queryMode = query.Mode??QueryMode.Both;
-				if (queryMode == QueryMode.CountOnly)
-				{
-					query.CountOfResultSet = isNolock ? source.CountReadUncommitted() : source.Count();
-					return result;
-				}
 				
-				source = source.AsNoTracking();
-				
-
-				if (queryMode == QueryMode.Both)
-				{
-					query.CountOfResultSet = isNolock ? source.CountReadUncommitted() : source.Count();
-				}
 
 				if (query.Skip > 0)
 				{
@@ -253,11 +239,7 @@ namespace Agile.Framework.Data
 					source = source.Take(query.Take ?? 0);
 				}
 
-
-				if (!(query.Take <= 0))
-				{
-					result = isNolock ? source.ToListReadUncommitted() : source.ToList();
-				}
+                
 				
 				return result;
 			}
@@ -274,7 +256,7 @@ namespace Agile.Framework.Data
 
 		#region IModelService Members
 
-		IEnumerable<TModel> IModelService.Select<TModel>(BaseEntityQuery<TModel> query) 
+		IEnumerable<TModel> IModelService.Select<TModel>(BaseQuery<TModel> query) 
 		{
             return this.Select<TModel>(query);
         }

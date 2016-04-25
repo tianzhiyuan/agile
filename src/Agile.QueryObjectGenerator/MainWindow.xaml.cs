@@ -68,7 +68,7 @@ namespace Agile.QueryObjectGenerator
 		public Bar Bar { get; set; }
 	}
 
-	public class FooQuery : BaseEntityQuery<Foo>
+	public class FooQuery : BaseQuery<Foo>
 	{
 		public BarQuery BarQuery { get; set; }
 
@@ -165,7 +165,7 @@ namespace Agile.QueryObjectGenerator
 	{
 		public Foo Foo { get; set; }
 	}
-	public class BarQuery:BaseEntityQuery<Bar>
+	public class BarQuery:BaseQuery<Bar>
 	{
 		public FooQuery FooQuery { get; set; }
 	}

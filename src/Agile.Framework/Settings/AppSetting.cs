@@ -14,7 +14,7 @@ namespace Agile.Framework.Settings
 		public string PropertyName { get; set; }
 		public string PropertyValue { get; set; }
 	}
-	public class AppSettingQuery:BaseEntityQuery<AppSetting>
+	public class AppSettingQuery:BaseQuery<AppSetting>
 	{
 		public string SettingType { get; set; }
 		public string PropertyName { get; set; }

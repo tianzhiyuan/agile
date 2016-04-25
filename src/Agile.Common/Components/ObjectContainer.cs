@@ -77,5 +77,10 @@ namespace Agile.Common.Components
         {
             return Current.Resolve(serviceType);
         }
+
+        public static IEnumerable<TService> ResolveAll<TService>() where TService : class
+        {
+            return Current.ResolveAll<TService>();
+        }
     }
 }

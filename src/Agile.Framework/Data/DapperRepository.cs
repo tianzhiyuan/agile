@@ -15,7 +15,7 @@ namespace Agile.Framework.Data
 	/// </summary>
 	public abstract class DapperRepository<TEntity, TEntityQuery> : IRepository<TEntity, TEntityQuery>
 		where TEntity : BaseEntity
-		where TEntityQuery : BaseEntityQuery<TEntity>
+		where TEntityQuery : BaseQuery<TEntity>
 	{
 		public const string DefaultConnectionName = "DefaultConnection";
 		protected IDbConnectionFactory _connectionFactory;

@@ -37,7 +37,7 @@ namespace Agile.Common.Utilities
 		public static bool IsBaseEntityQuery(Type type)
 		{
 			return type != null && type.IsClass && !type.IsAbstract && !type.IsGenericType &&
-			       typeof (BaseEntityQuery).IsAssignableFrom(type);
+			       typeof (BaseQuery).IsAssignableFrom(type);
 		}
     }
 }

@@ -6,20 +6,20 @@ using Autofac;
 using Agile.Common.Components;
 namespace Agile.Autofac
 {
-    public class AutofacObjectContainer : IObjectContainer
+    public class AutofacContainer : IObjectContainer
     {
         private readonly IContainer _container;
 
         /// <summary>Default constructor.
         /// </summary>
-        public AutofacObjectContainer()
+        public AutofacContainer()
         {
             _container = new ContainerBuilder().Build();
         }
         /// <summary>Parameterized constructor.
         /// </summary>
         /// <param name="containerBuilder"></param>
-        public AutofacObjectContainer(ContainerBuilder containerBuilder)
+        public AutofacContainer(ContainerBuilder containerBuilder)
         {
             _container = containerBuilder.Build();
         }
@@ -108,5 +108,11 @@ namespace Agile.Autofac
         {
             return _container.Resolve(serviceType);
         }
+
+        public IEnumerable<TService> ResolveAll<TService>() where TService : class
+        {
+            return _container.Resolve<IEnumerable<TService>>();
+        }
+
     }
 }

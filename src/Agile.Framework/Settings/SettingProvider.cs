@@ -47,7 +47,7 @@ namespace Agile.Framework.Settings
 			var settingType = settings.GetType();
 			var settingTypeName = GetSettingTypeName(appName, settingType);
 			var appSettingProperties =
-				_modelService.Select(new AppSettingQuery() {SettingType = settingTypeName, Mode = QueryMode.ResultSetOnly});
+				_modelService.Select(new AppSettingQuery() {SettingType = settingTypeName});
 			if (!appSettingProperties.Any())
 			{
 				//create
@@ -103,7 +103,7 @@ namespace Agile.Framework.Settings
 			var cacheObj = _cache.Get(SettingConstant.SettingCacheKey) as IDictionary<string, ISetting>;
 			if (cacheObj == null || forceToRefresh)
 			{
-				var allSettings = _modelService.Select(new AppSettingQuery() {Mode = QueryMode.ResultSetOnly});
+				var allSettings = _modelService.Select(new AppSettingQuery() {});
 				cacheObj = new Dictionary<string, ISetting>();
 				if (!allSettings.Any())
 				{

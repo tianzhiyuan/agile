@@ -9,7 +9,7 @@ namespace Agile.Framework.Data
 {
     public interface IModelService
     {
-		IEnumerable<TModel> Select<TModel>(BaseEntityQuery<TModel> query)
+		IEnumerable<TModel> Select<TModel>(BaseQuery<TModel> query)
 			where TModel :  BaseEntity;
 
 		void Update<TModel>(params TModel[] models) where TModel :  BaseEntity, new();

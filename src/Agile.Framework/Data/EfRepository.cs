@@ -10,7 +10,7 @@ namespace Agile.Framework.Data
 {
 	public class EfRepository<TEntity, TEntityQuery> : IRepository<TEntity, TEntityQuery>
 		where TEntity : BaseEntity
-		where TEntityQuery : BaseEntityQuery<TEntity>
+		where TEntityQuery : BaseQuery<TEntity>
 	{
 		protected string _dbContextName;
 		protected IDbContextFactory _DbContextFactory;
@@ -34,7 +34,7 @@ namespace Agile.Framework.Data
 			using (var db = GetDbContext())
 			{
 				var dbSet = db.Set<TEntity>();
-				return dbSet.Where(o => idList.Contains(o.Id)).AsNoTracking().ToList();
+				return dbSet.Where(o => idList.Contains(o.Id.Value)).AsNoTracking().ToList();
 			}
 		}
 

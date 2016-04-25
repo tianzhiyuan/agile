@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Autofac;
-using Agile.Common.Components;
+﻿using Agile.Common.Components;
 using Agile.Common.Configurations;
+using Autofac;
 
 namespace Agile.Autofac
 {
@@ -19,7 +15,7 @@ namespace Agile.Autofac
         /// <returns></returns>
         public static Configuration UseAutofac(this Configuration configuration, ContainerBuilder containerBuilder)
         {
-            ObjectContainer.SetContainer(new AutofacObjectContainer(containerBuilder));
+            ObjectContainer.SetContainer(new AutofacContainer(containerBuilder));
             return configuration;
         }
     }

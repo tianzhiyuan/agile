@@ -11,19 +11,19 @@ namespace Agile.Common.Data
 		/// <summary>
 		/// key field of a entity
 		/// </summary>
-        public int Id { get; set; }
+        public int? Id { get; set; }
 		/// <summary>
 		/// entity create timestamp
 		/// </summary>
-        public DateTime CreatedAt { get; set; }
+        public DateTime? CreatedAt { get; set; }
 		/// <summary>
 		/// entity last modify timestamp
 		/// </summary>
-        public DateTime LastModifiedAt { get; set; }
+        public DateTime? LastModifiedAt { get; set; }
 
 		private static bool IsTransient(BaseEntity obj)
 		{
-			return obj != null && Equals(obj.Id, default(int));
+		    return obj != null && obj.Id == null;
 		}
 
 		public override bool Equals(object obj)
@@ -55,16 +55,7 @@ namespace Agile.Common.Data
 		{
 			return Equals(Id, default(int)) ? base.GetHashCode() : Id.GetHashCode();
 		}
-
-		public static bool operator ==(BaseEntity x, BaseEntity y)
-		{
-			return Equals(x, y);
-		}
-
-		public static bool operator !=(BaseEntity x, BaseEntity y)
-		{
-			return !Equals(x, y);
-		}
+        
     }
     
 }

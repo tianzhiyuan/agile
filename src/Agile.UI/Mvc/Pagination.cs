@@ -13,7 +13,7 @@ namespace Agile.UI.Mvc
         {
             if (skip <= 0) skip = 0;
             if (count <= 0) count = 0;
-            if (take <= 0) throw new RuleViolatedException("take less than zero");
+            if (take <= 0) throw new BusinessException("take less than zero");
             this.take = take;
             this.skip = skip;
             this.count = count;

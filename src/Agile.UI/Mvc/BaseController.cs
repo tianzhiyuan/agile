@@ -92,7 +92,7 @@ namespace Agile.UI.Mvc
 
     public class BaseController<TModel, TQuery> : BaseController
         where TModel : BaseEntity, new()
-		where TQuery : BaseEntityQuery<TModel>, new()
+		where TQuery : BaseQuery<TModel>, new()
     {
         public virtual ActionResult List(TQuery query)
         {

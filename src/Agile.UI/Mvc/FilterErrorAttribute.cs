@@ -17,15 +17,15 @@ namespace Agile.UI.Mvc
         public string ErrPage { get; set; }
         public void OnException(ExceptionContext filterContext)
         {
-            var error = filterContext.Exception as RuleViolatedException;
+            var error = filterContext.Exception as BusinessException;
             if (error == null)
             {
                 var logger = ObjectContainer.Resolve<ILogger>();
                 logger.Error(filterContext.Exception);
 
                 error = HttpContext.Current.IsDebuggingEnabled
-                            ? new RuleViolatedException(filterContext.Exception.Message)
-                            : new RuleViolatedException((int) RuleViolatedType.UnKnown, "未知错误", filterContext.Exception);
+                            ? new BusinessException(filterContext.Exception.Message)
+                            : new BusinessException((int) RuleViolatedType.UnKnown, "未知错误", filterContext.Exception);
             }
             switch (error.Code)
             {

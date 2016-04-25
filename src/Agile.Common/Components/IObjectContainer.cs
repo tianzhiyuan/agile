@@ -47,5 +47,11 @@ namespace Agile.Common.Components
         /// <param name="serviceType">The service type.</param>
         /// <returns>The component instance that provides the service.</returns>
         object Resolve(Type serviceType);
+        /// <summary>
+        /// Resovle all services of TService
+        /// </summary>
+        /// <typeparam name="TService"></typeparam>
+        /// <returns></returns>
+        IEnumerable<TService> ResolveAll<TService>() where TService : class;
     }
 }
