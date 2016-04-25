@@ -72,7 +72,6 @@
     <Compile Include="Components\ComponentAttribute.cs" />
     <Compile Include="Components\IObjectContainer.cs" />
     <Compile Include="Components\ObjectContainer.cs" />
-    <Compile Include="Configurations\Configuration.cs" />
     <Compile Include="Data\BaseEntity.cs" />
     <Compile Include="Data\BaseQuery.cs" />
     <Compile Include="Data\OrderDirection.cs" />

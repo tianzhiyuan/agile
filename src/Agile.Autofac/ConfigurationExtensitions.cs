@@ -1,6 +1,5 @@
 ﻿using Agile.Common;
 using Agile.Common.Components;
-using Agile.Common.Configurations;
 using Autofac;
 
 namespace Agile.Autofac
