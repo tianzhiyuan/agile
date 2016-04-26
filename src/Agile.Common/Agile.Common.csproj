@@ -64,6 +64,7 @@
     <Compile Include="DataConfig\Property.cs" />
     <Compile Include="Data\IOperator.cs" />
     <Compile Include="Data\QueryResult.cs" />
+    <Compile Include="Data\Range.cs" />
     <Compile Include="Logging\EmptyLoggerFactory.cs" />
     <Compile Include="Logging\ILoggerFactory.cs" />
     <Compile Include="Logging\LoggerFactory.cs" />

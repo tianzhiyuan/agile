@@ -31,14 +31,14 @@ namespace Agile.Framework.Test
 		[Test]
 		public void Test2()
 		{
-			var svc = new FtpFileService(new EmptyLoggerFactory(), null)
-				{
-					Username = "sa",
-					Password = "111111",
-					ServerAddr = "ftp://127.0.0.1"
-				};
-			var bytes = System.IO.File.ReadAllBytes(@"d:\test.jpg");
-			svc.Create(bytes, "test.jpg");
+//			var svc = new FtpFileService(new EmptyLoggerFactory(), null)
+//				{
+////					Username = "sa",
+////					Password = "111111",
+////					ServerAddr = "ftp://127.0.0.1"
+//				};
+//			var bytes = System.IO.File.ReadAllBytes(@"d:\test.jpg");
+//			svc.Create(bytes, "test.jpg");
 		}
 		[Test]
 		public void Test3()

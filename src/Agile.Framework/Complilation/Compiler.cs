@@ -522,7 +522,7 @@ namespace Agile.Framework.Complilation
 		public static IQueryable<TModel> PagerHandler<TModel>(IQueryable<TModel> source, BaseQuery<TModel> query)
 			where TModel :  BaseEntity
         {
-            query.CountOfResultSet = source.Count();
+//            query.CountOfResultSet = source.Count();
             if (query.Skip != null && query.Skip > 0)
             {
                 source = source.Skip(query.Skip.Value);

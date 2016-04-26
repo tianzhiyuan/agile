@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Agile.Framework.Caching;
+using System.IO;
 using NUnit.Framework;
 
 namespace Agile.Framework.Test
@@ -16,7 +12,7 @@ namespace Agile.Framework.Test
 		[Test]
 		public void Test1()
 		{
-			System.IO.Directory.CreateDirectory(@"d:\1\2\3");
+			Directory.CreateDirectory(@"d:\1\2\3");
 			Console.WriteLine(string.Format("{0,3}", Foo.Fie));
 			Console.WriteLine(string.Format("{0,3}", Foo.Field1));
 			Console.WriteLine(string.Format("{0,3}", Foo.FF));

@@ -8,7 +8,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Transactions;
 using Agile.Common.Data;
-using Agile.Common.Utilities;
+using Agile.Common.Utils;
 using EntityFramework.Extensions;
 
 namespace Agile.Framework.Data
@@ -226,7 +226,7 @@ namespace Agile.Framework.Data
 					source = query.Includes.Aggregate(source, (current, include) => current.Include(include));
 				}
 				//do some query
-				source = query.Apply(source);
+//				source = query.Apply(source);
 				
 
 				if (query.Skip > 0)

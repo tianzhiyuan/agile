@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using AutoMapper;
 using Agile.Common;
 using Agile.Common.Components;
 using Agile.Common.Data;
-using Agile.Common.Utilities;
+using Agile.Common.Utils;
+using AutoMapper;
 
 namespace Agile.Framework.Data
 {
@@ -28,7 +26,7 @@ namespace Agile.Framework.Data
             var query = new TQuery() {Id = model.Id};
             var svc = ObjectContainer.Resolve<IModelService>();
             var current = svc.FirstOrDefault(query);
-            AutoMapper.Mapper.Map(current, model);
+            Mapper.Map(current, model);
             return current;
         }
         /// <summary>
@@ -48,7 +46,7 @@ namespace Agile.Framework.Data
             foreach (var model in models)
             {
                 var origin = origins.FirstOrDefault(o => o.Id == model.Id);
-                AutoMapper.Mapper.Map(origin, model);
+                Mapper.Map(origin, model);
             }
             return origins.ToArray();
         }
