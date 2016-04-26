@@ -1,7 +1,7 @@
 ﻿using System;
 using Agile.Common.Data;
 
-namespace Agile.Common.File
+namespace Agile.Framework.File
 {
     /// <summary>
     /// 文件元数据

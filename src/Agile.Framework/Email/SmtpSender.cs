@@ -27,12 +27,6 @@ namespace Agile.Framework.Email
 			_client.Send(email.Message);
 		}
 
-		public Task SendAsync(Email email)
-		{
-			_client.EnableSsl = email.UseSsl;
-			return _client.SendMailAsync(email.Message);
-		}
-
 		public void Dispose()
 		{
 			if (_client != null)

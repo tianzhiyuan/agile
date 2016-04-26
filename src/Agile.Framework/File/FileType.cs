@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Agile.Framework.File
 {
@@ -30,17 +27,19 @@ namespace Agile.Framework.File
     }
     public enum FileType
     {
+        [Description("普通文件")]
         General = 1,
-        [Description("")]
         [FileTypeAcceptExtension("jpg,bmp,jpeg,png")]
-        Picture = 2,
+        [Description("图片")]
+        Image = 2,
         [FileTypeAcceptExtension("doc,docx,xls,xlsx,pdf,txt,rtf")]
+        [Description("文档")]
         Document = 3,
         [FileTypeAcceptExtension("mpg,mp4")]
+        [Description("视频")]
         Video = 4,
+        [Description("音频")]
         [FileTypeAcceptExtension("mp3,wav,rm")]
         Audio = 5,
-
-		
     }
 }

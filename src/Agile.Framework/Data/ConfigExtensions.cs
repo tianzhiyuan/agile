@@ -1,21 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using AutoMapper;
+using Agile.Common;
 using Agile.Common.Components;
-using Agile.Common.Configurations;
-using System.Reflection;
-using Agile.Common.Data;
 
 namespace Agile.Framework.Data
 {
     public static class ConfigExtensions
     {
-        public static Configuration UseDataService(this Configuration configuration, Type dbContextType, string nameOrConnectionString)
+        public static WireUp UseDataService(this WireUp configuration, Type dbContextType, string nameOrConnectionString)
         {
 			var svc = new EfDataService() { DbContextType = dbContextType, NameOrConnectionString = nameOrConnectionString };
-			configuration.SetDefault<IModelService, EfDataService>(svc);
+//			configuration.SetDefault<IModelService, EfDataService>(svc);
             return configuration;
         }
 
@@ -46,7 +40,7 @@ namespace Agile.Framework.Data
         }
         
 
-        public static Configuration UseDataServiceDefaultFiller(this Configuration configuration)
+        public static WireUp UseDataServiceDefaultFiller(this WireUp configuration)
         {
             var svc = ObjectContainer.Resolve<IModelService>() as EfDataService;
             if (svc != null)

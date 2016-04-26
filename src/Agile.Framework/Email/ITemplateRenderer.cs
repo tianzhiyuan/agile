@@ -12,5 +12,6 @@ namespace Agile.Framework.Email
 	public interface ITemplateRenderer
 	{
 		string Parse<T>(string template, T model, bool isHtml = true);
+	    string Parse(string template, object model);
 	}
 }

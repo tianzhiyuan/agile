@@ -61,15 +61,8 @@ namespace Agile.Framework.File.Impl
 			var rand = string.Format("{0}{1,12}", Encode(GetMillisecondsOfAMonth(now)),
 									 Guid.NewGuid().ToString().Replace("-", ""));
 			var fileHandle = string.Format("{0}{1}{2}{3}", fileTypeName, middleName, rand, extension);
-			var file = new File()
+			var file = new FileMetadata()
 				{
-					Handle = fileHandle,
-					Metadata = new FileMetadata()
-						{
-							Name = filename,
-							Size = content.Length,
-							Type = fileType
-						}
 				};
 			//save file
 			var directory = Path.Combine(BaseDirectory, fileTypeName, middleName);
@@ -114,7 +107,17 @@ namespace Agile.Framework.File.Impl
 			return true;
 		}
 
-		public void Rename(string fileHandle, string newName)
+	    public string GetAccessUri(string fileHandle)
+	    {
+	        throw new NotImplementedException();
+	    }
+
+	    public string Clone(string sourceFileHandle)
+	    {
+	        throw new NotImplementedException();
+	    }
+
+	    public void Rename(string fileHandle, string newName)
 		{
 			throw new NotImplementedException();
 		}

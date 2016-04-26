@@ -78,10 +78,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Caching\Extensions.cs" />
-    <Compile Include="Caching\ICacheService.cs" />
-    <Compile Include="Caching\ICachePolicy.cs" />
-    <Compile Include="Caching\MemoryCacheService.cs" />
     <Compile Include="Captcha\FontConfig.cs" />
     <Compile Include="Captcha\SimpleCaptcha.cs" />
     <Compile Include="Complilation\Compiler.cs" />
@@ -102,12 +98,13 @@
     <Compile Include="Email\SmtpSender.cs" />
     <Compile Include="Data\IModelService.cs" />
     <Compile Include="Data\Extensions.cs" />
-    <Compile Include="File\Impl\FtpFileService.cs" />
-    <Compile Include="File\Impl\LocalFileService.cs" />
-    <Compile Include="File\File.cs" />
+    <Compile Include="File\FileMetadata.cs" />
     <Compile Include="File\FileType.cs" />
     <Compile Include="File\FileTypeUtil.cs" />
     <Compile Include="File\IFileService.cs" />
+    <Compile Include="File\IFtpConfigProvider.cs" />
+    <Compile Include="File\Impl\FtpFileService.cs" />
+    <Compile Include="File\Impl\LocalFileService.cs" />
     <Compile Include="Install\CreateTableIfNotExistsMsSql.cs" />
     <Compile Include="Install\CreateTableIfNotExistsMySql.cs" />
     <Compile Include="Install\IInstallService.cs" />
@@ -117,27 +114,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Settings\AppSetting.cs" />
-    <Compile Include="Settings\ISetting.cs" />
-    <Compile Include="Settings\ISettingProvider.cs" />
-    <Compile Include="Settings\SettingConstant.cs" />
-    <Compile Include="Settings\SettingHelper.cs" />
-    <Compile Include="Settings\SettingDescriptor.cs" />
-    <Compile Include="Settings\SettingProvider.cs" />
     <Compile Include="SMS\ISMSSender.cs" />
     <Compile Include="SMS\SMSMessage.cs" />
-    <Compile Include="Tasks\Impl\AbstractTask.cs" />
-    <Compile Include="Tasks\Impl\AbstractTrigger.cs" />
-    <Compile Include="Tasks\Impl\DailyTrigger.cs" />
-    <Compile Include="Tasks\Impl\DefaultScheduler.cs" />
-    <Compile Include="Tasks\Impl\RepeatTrigger.cs" />
-    <Compile Include="Tasks\Impl\SimpleTask.cs" />
-    <Compile Include="Tasks\Impl\TimerTrigger.cs" />
-    <Compile Include="Tasks\IScheduler.cs" />
-    <Compile Include="Tasks\ITask.cs" />
-    <Compile Include="Tasks\ITrigger.cs" />
-    <Compile Include="Tasks\TaskExecutionArgs.cs" />
-    <Compile Include="Tasks\TaskExecutionContext.cs" />
     <Compile Include="WebHelper.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -167,6 +145,9 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Tasks\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\AutoMapper.3.2.1\tools\AutoMapper.targets" Condition="Exists('..\packages\AutoMapper.3.2.1\tools\AutoMapper.targets')" />

@@ -1,47 +1,34 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Agile.Framework.File
+﻿namespace Agile.Framework.File
 {
     /// <summary>
-    /// 文件服务接口
+    /// file service
     /// </summary>
     public interface IFileService
     {
-		/// <summary>
-		/// 创建文件
-		/// </summary>
-		/// <param name="data">数据</param>
-		/// <param name="filename">文件名称</param>
-		/// <returns>文件句柄</returns>
+        /// <summary>
+        /// create a file
+        /// </summary>
+        /// <param name="data">data</param>
+        /// <param name="filename">file origin name</param>
+        /// <returns>file handle</returns>
         string Create(byte[] data, string filename);
-		/// <summary>
-		/// 删除文件
-		/// </summary>
-		/// <param name="fileHandle">文件句柄</param>
-		/// <returns></returns>
-		bool Delete(string fileHandle);
-		/// <summary>
-		/// 重命名元数据中的文件名
-		/// </summary>
-		/// <param name="fileHandle">文件句柄</param>
-		/// <param name="newName">新名称</param>
-	    void Rename(string fileHandle, string newName);
-		/// <summary>
-		/// 获取访问的url
-		/// </summary>
-		/// <param name="fileHandle">文件句柄</param>
-		/// <returns></returns>
-		string GetAccessUrl(string fileHandle);
-		/// <summary>
-		/// 获取元数据
-		/// </summary>
-		/// <param name="fileHandle"></param>
-		/// <returns></returns>
-	    FileMetadata GetMetedata(string fileHandle);
+        /// <summary>
+        /// delete a file
+        /// </summary>
+        /// <param name="fileHandle"></param>
+        /// <returns></returns>
+        bool Delete(string fileHandle);
+        /// <summary>
+        /// get access url
+        /// </summary>
+        /// <param name="fileHandle"></param>
+        /// <returns></returns>
+        string GetAccessUri(string fileHandle);
+        /// <summary>
+        /// clone a file
+        /// </summary>
+        /// <param name="sourceFileHandle">source file handle</param>
+        /// <returns>new file handle</returns>
+        string Clone(string sourceFileHandle);
     }
 }

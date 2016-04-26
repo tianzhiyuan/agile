@@ -12,6 +12,5 @@ namespace Agile.Framework.Email
 	public interface IEmailSender
 	{
 		void Send(Email email);
-		Task SendAsync(Email email);
 	}
 }
