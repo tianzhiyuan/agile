@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Agile.Common;
 using Agile.Common.Logging;
 using Agile.Common.Security;
+using Agile.Common.Utils;
 using Agile.Framework.Data;
 
 namespace Agile.Framework.File.Impl
@@ -16,7 +17,7 @@ namespace Agile.Framework.File.Impl
 	/// </summary>
 	public class LocalFileService : IFileService
 	{
-		private ILogger _logger;
+		private readonly ILogger _logger;
 		private static readonly DateTime baseDate = new DateTime(2000, 1, 1);
 		private static long GetEpoch(DateTime dt)
 		{
@@ -38,11 +39,18 @@ namespace Agile.Framework.File.Impl
 		{
 			return (long) (current - new DateTime(current.Year, current.Month, 0)).TotalMilliseconds;
 		}
-		public LocalFileService(ILoggerFactory factory)
+        private static long GetMillisecondsOfADay(DateTime current)
+        {
+            return (long)(current - new DateTime(current.Year, current.Month, current.Day)).TotalMilliseconds;
+        }
+        public LocalFileService()
 		{
-			_logger = factory.Create(typeof (LocalFileService));
+			_logger = LoggerFactory.Create(typeof (LocalFileService));
 			BaseDirectory = WebHelper.MapPath("~/uploadfiles");
 		}
+        /// <summary>
+        /// 基础目录，默认为 ~/uploadfiles
+        /// </summary>
 		public string BaseDirectory { get; set; }
 		public string AccessUrlRoot { get; set; }
 		public string Create(byte[] content, string filename)
@@ -50,24 +58,42 @@ namespace Agile.Framework.File.Impl
 			var extension = Path.GetExtension(filename);
 			var fileType = FileTypeUtil.DeduceFileTypeFromExtension(extension);
 			var now = DateTime.Now;
-			//路径: [文件类型]/[年月]/文件句柄.后缀
-			//文件句柄: 文件类型年月随机字符串.后缀
-			//其中文件类型取类型名称的前三个字符，命名时应该注意！
-			var fileTypeName = fileType.ToString().Substring(0, 3).PadLeft(3, '0');
-			var middleName = string.Format("{0:yyyyMM}", DateTime.Now);
-			//3+6+6+12
-			var rand = string.Format("{0}{1,12}", Encode(GetMillisecondsOfAMonth(now)),
-									 Guid.NewGuid().ToString().Replace("-", ""));
-			var fileHandle = string.Format("{0}{1}{2}{3}", fileTypeName, middleName, rand, extension);
-			var file = new FileMetadata()
+            //路径: [文件类型]/[年]/[月日]/[Encode[毫秒]][Encode[随机串]].后缀
+            //文件句柄: 文件类型年月随机字符串.后缀
+            //其中文件类型取类型名称的前五个字符，命名时应该注意！
+            var rnd = BitConverter.ToInt64(Guid.NewGuid().ToByteArray().Take(48).ToArray(), 0);
+            var fileTypeName = fileType.ToString().Substring(0, 5).PadLeft(5, '0').ToUpper();
+            var year = string.Format("{0:yyyy}", now);
+            var monthAndDay = string.Format("{0:MMdd}", now);
+
+            var fileName = string.Format("{0}{1}{2}", Encode(GetMillisecondsOfADay(now)),
+                Encode(rnd),
+                extension);
+            var fileHandle = string.Format("{0}{1}{2}{3}", fileTypeName, year, monthAndDay, fileName);
+            var file = new FileMetadata()
 				{
-				};
+                FileHandle = fileHandle,
+                Size = content.Length,
+                Name = filename,
+                CreatedAt = now,
+                FileType = (int)fileType,
+                Path = Path.Combine(fileTypeName, year, monthAndDay),
+                MimeType = MimeTypeUtil.GetMimeType(extension)
+            };
 			//save file
-			var directory = Path.Combine(BaseDirectory, fileTypeName, middleName);
+		    var directory = Path.Combine(BaseDirectory, fileTypeName, year, monthAndDay);
 			try
 			{
 				if (!Directory.Exists(directory))
 				{
+				    if (!Directory.Exists(Path.Combine(BaseDirectory, fileTypeName, year)))
+				    {
+				        if (!Directory.Exists(Path.Combine(BaseDirectory, fileTypeName)))
+				        {
+				            Directory.CreateDirectory(Path.Combine(BaseDirectory, fileTypeName));
+				        }
+				        Directory.CreateDirectory(Path.Combine(BaseDirectory, fileTypeName, year));
+				    }
 					Directory.CreateDirectory(directory);
 				}
 			}
@@ -91,11 +117,15 @@ namespace Agile.Framework.File.Impl
 
 		public bool Delete(string fileHandle)
 		{
-			var path = Path.Combine(BaseDirectory, fileHandle.Substring(0, 3), fileHandle.Substring(3, 6), fileHandle);
+		    if (string.IsNullOrEmpty(fileHandle))
+		    {
+		        return false;
+		    }
+		    var path = GetRelativePath(fileHandle);
 			//delete file from disk
 			try
 			{
-				System.IO.File.Delete(path);
+			    System.IO.File.Delete(Path.Combine(BaseDirectory, path));
 			}
 			catch (Exception error)
 			{
@@ -107,28 +137,35 @@ namespace Agile.Framework.File.Impl
 
 	    public string GetAccessUri(string fileHandle)
 	    {
-	        throw new NotImplementedException();
-	    }
+            if (string.IsNullOrEmpty(fileHandle))
+            {
+                return "";
+            }
+            var path = GetRelativePath(fileHandle);
+            return new UriBuilder(AccessUrlRoot) { Path = path }.ToString();
+        }
 
 	    public string Clone(string sourceFileHandle)
 	    {
-	        throw new NotImplementedException();
+	        return sourceFileHandle;
 	    }
 
 	    public void Rename(string fileHandle, string newName)
 		{
-			throw new NotImplementedException();
+			
 		}
+        
 
-		public string GetAccessUrl(string fileHandle)
-		{
-			var path = string.Format("/{0}/{1}/{2}", fileHandle.Substring(0, 3), fileHandle.Substring(3, 6), fileHandle);
-			return new UriBuilder(AccessUrlRoot) {Path = path}.ToString();
-		}
-
-		public FileMetadata GetMetedata(string fileHandle)
-		{
-			throw new NotImplementedException();
-		}
-	}
+        private string GetRelativePath(string fileHandle)
+        {
+            if (fileHandle.Length < 14)
+            {
+                return string.Empty;
+            }
+            return Path.Combine(fileHandle.Substring(0, 5),
+                fileHandle.Substring(5, 4),
+                fileHandle.Substring(9, 4),
+                fileHandle.Substring(13));
+        }
+    }
 }

@@ -109,7 +109,7 @@ namespace Agile.Framework.File.Impl
                 fileHandle.Substring(13));
         }
 
-        private const string _Clist = "0123456789abcdefghijklmnopqrstuvwxyz-_ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        private const string _Clist = "0123456789abcdefghijklmnopqrstuvwxyz-_";
         private static readonly char[] _Clistarr = _Clist.ToCharArray();
         private static readonly int _CLength = _Clistarr.Length;
         private string Encode(long inputNumber)
