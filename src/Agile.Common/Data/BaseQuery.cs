@@ -47,10 +47,36 @@ namespace Agile.Common.Data
 		/// take number
 		/// </summary>
 		public int? Take { get; set; }
-		/// <summary>
-		/// orderby field. default "Id" field
-		/// </summary>
-		public string OrderField { get; set; }
+
+        /// <summary>
+        /// 创建时间范围
+        /// </summary>
+        public DateTime? CreatedAtFrom { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public DateTime? CreatedAtTo { get; set; }
+        /// <summary>
+        /// 更新时间范围
+        /// </summary>
+        public DateTime? LastModifiedAtFrom { get; set; }
+        /// <summary>
+        /// 更新时间范围
+        /// </summary>
+        public DateTime? LastModifiedAtTo { get; set; }
+
+        /// <summary>
+        /// Id范围
+        /// </summary>
+        public long? IdFrom { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public long? IdTo { get; set; }
+        /// <summary>
+        /// orderby field. default "Id" field
+        /// </summary>
+        public string OrderBy { get; set; }
 		/// <summary>
 		/// order direction. i.e. OrderBy/OrderByDescending . default <see cref="Data.OrderDirection.DESC"/>
 		/// </summary>

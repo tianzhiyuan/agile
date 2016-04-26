@@ -43,9 +43,6 @@
     <Reference Include="Dapper">
       <HintPath>..\packages\Dapper.1.39\lib\net45\Dapper.dll</HintPath>
     </Reference>
-    <Reference Include="DapperExtensions">
-      <HintPath>..\packages\DapperExtensions.1.4.4\lib\net40\DapperExtensions.dll</HintPath>
-    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
@@ -61,6 +58,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Caching" />
@@ -81,23 +79,17 @@
     <Compile Include="Captcha\FontConfig.cs" />
     <Compile Include="Captcha\SimpleCaptcha.cs" />
     <Compile Include="Complilation\Compiler.cs" />
-    <Compile Include="Data\DapperRepository.cs" />
-    <Compile Include="Data\ConfigExtensions.cs" />
-    <Compile Include="Data\DataServiceEventArgs.cs" />
-    <Compile Include="Data\DefaultDbContext.cs" />
-    <Compile Include="Data\EfDataService.cs" />
-    <Compile Include="Data\EfRepository.cs" />
-    <Compile Include="Data\IDbConnectionFactory.cs" />
-    <Compile Include="Data\IDbContextFactory.cs" />
+    <Compile Include="Data\BaseRepository.cs" />
+    <Compile Include="Data\ConnectionManager.cs" />
+    <Compile Include="Data\IPagingQuery.cs" />
     <Compile Include="Data\IRepository.cs" />
-    <Compile Include="Data\PartialFiller.cs" />
+    <Compile Include="Data\QueryRepository.cs" />
+    <Compile Include="Data\SqlBuilder.cs" />
     <Compile Include="Email\Email.cs" />
     <Compile Include="Email\IEmailSender.cs" />
     <Compile Include="Email\ITemplateRenderer.cs" />
     <Compile Include="Email\RazorRenderer.cs" />
     <Compile Include="Email\SmtpSender.cs" />
-    <Compile Include="Data\IModelService.cs" />
-    <Compile Include="Data\Extensions.cs" />
     <Compile Include="File\FileMetadata.cs" />
     <Compile Include="File\FileType.cs" />
     <Compile Include="File\FileTypeUtil.cs" />

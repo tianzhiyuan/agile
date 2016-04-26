@@ -16,7 +16,6 @@ namespace Agile.Framework.File.Impl
 	/// </summary>
 	public class LocalFileService : IFileService
 	{
-		private IModelService _dataService;
 		private ILogger _logger;
 		private static readonly DateTime baseDate = new DateTime(2000, 1, 1);
 		private static long GetEpoch(DateTime dt)
@@ -39,9 +38,8 @@ namespace Agile.Framework.File.Impl
 		{
 			return (long) (current - new DateTime(current.Year, current.Month, 0)).TotalMilliseconds;
 		}
-		public LocalFileService(IModelService service, ILoggerFactory factory)
+		public LocalFileService(ILoggerFactory factory)
 		{
-			_dataService = service;
 			_logger = factory.Create(typeof (LocalFileService));
 			BaseDirectory = WebHelper.MapPath("~/uploadfiles");
 		}
