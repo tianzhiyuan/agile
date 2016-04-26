@@ -3,64 +3,62 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Agile.Common.Data;
 using Agile.Common.Exceptions;
 
 namespace Agile.UI.Mvc
 {
-    public class Pagination
+    public class Pagination<T>
     {
-        public Pagination(int take, int skip ,int count)
+        public const int DefaultPageSize = 10;
+        public Pagination(IEnumerable<T> list, int totalCount, int? skip, int? take)
         {
-            if (skip <= 0) skip = 0;
-            if (count <= 0) count = 0;
-            if (take <= 0) throw new BusinessException("take less than zero");
-            this.take = take;
-            this.skip = skip;
-            this.count = count;
-        }
-
-        private readonly int take;
-        private readonly int skip;
-        private readonly int count;
-        public int Take { get { return take; } }
-        public int Skip { get { return skip; } }
-        public int Count { get { return count; } }
-        public int CurrentPage { get { return  skip/take + 1; } }
-        public int TotalPage { get { return count/take + 1; } }
-
-        public int NextPage
-        {
-            get
+            if (list == null)
             {
-                if (CurrentPage == TotalPage) return TotalPage;
-                return CurrentPage + 1;
+                throw new ArgumentNullException("list");
+            }
+            if (totalCount < 0)
+            {
+                throw new ArgumentException("totalCount");
+            }
+
+            List = list;
+            TotalItemCount = totalCount;
+            PageSize = take ?? DefaultPageSize;
+            if (PageSize <= 0)
+            {
+                PageSize = DefaultPageSize;
+            }
+            Skip = skip ?? 0;
+            PageCount = (TotalItemCount + PageSize - 1) / PageSize;
+            CurrentPage = Skip / PageSize + 1;
+            if (CurrentPage > 1)
+            {
+                HasPreviousPage = true;
+            }
+            if (CurrentPage < PageCount)
+            {
+                HasNextPage = true;
             }
         }
 
-        public int PrevPage
+        public Pagination(QueryResult<T> result, BaseQuery query) :
+            this(result.List, result.Count, query.Skip, query.Take)
         {
-            get
-            {
-                if (CurrentPage == 1) return 1;
-                return CurrentPage - 1;
-            }
+            Query = query;
         }
-
-        public int NextSkip
-        {
-            get { return (NextPage - 1)*take; }
-        }
-        public int PrevSkip
-        {
-            get { return (PrevPage - 1)*take; }
-        }
-        public int FirstSkip
-        {
-            get { return 0; }
-        }
-        public int LastSkip
-        {
-            get { return (TotalPage - 1)*take; }
-        }
+        public object Query { get; set; }
+        /// <summary>
+        /// 数据
+        /// </summary>
+        public IEnumerable<T> List { get; private set; }
+        public int Count { get { return List.Count(); } }
+        public int PageCount { get; private set; }
+        public int TotalItemCount { get; private set; }
+        public int CurrentPage { get; private set; }
+        public int PageSize { get; private set; }
+        public int Skip { get; private set; }
+        public bool HasPreviousPage { get; private set; }
+        public bool HasNextPage { get; private set; }
     }
 }
