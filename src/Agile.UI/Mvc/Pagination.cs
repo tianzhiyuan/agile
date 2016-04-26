@@ -51,13 +51,13 @@ namespace Agile.UI.Mvc
         /// <summary>
         /// 数据
         /// </summary>
-        public IEnumerable<T> List { get; private set; }
-        public int Count { get { return List.Count(); } }
-        public int PageCount { get; private set; }
-        public int TotalItemCount { get; private set; }
-        public int CurrentPage { get; private set; }
-        public int PageSize { get; private set; }
-        public int Skip { get; private set; }
+        public IEnumerable<T> List { get; }
+        public int Count => List.Count();
+        public int PageCount { get; }
+        public int TotalItemCount { get; }
+        public int CurrentPage { get; }
+        public int PageSize { get; }
+        public int Skip { get; }
         public bool HasPreviousPage { get; private set; }
         public bool HasNextPage { get; private set; }
     }

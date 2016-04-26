@@ -1,0 +1,201 @@
+﻿
+.row-grid {
+    margin-bottom: 10px;
+}
+
+.input-group .title {
+    font-weight: 500;
+    color:#555;
+    background-color: #eee;
+
+}
+
+.__jquery-loading-mask tbody,
+.__jquery-loading-mask tr,
+.__jquery-loading-mask td {
+    height: 100%;
+}
+.loadmask {
+    z-index: 2000;
+    position: absolute;
+    top:0;
+    left:0;
+    -moz-opacity: 0.5;
+    opacity: .50;
+    filter: alpha(opacity=50);
+    background-color: #CCC;
+    width: 100%;
+    height: 100%;
+    zoom: 1;
+}
+.loadmask-msg {
+    z-index: 2001;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border:1px solid #6593cf;
+    background: #c3daf9;
+    padding:2px;
+}
+.loadmask-msg div {
+    padding: 14px 12px 14px 65px;
+    background: #FBFBFF url('/Content/loading.gif') no-repeat 0px 0px;
+    line-height: 16px;
+	border:1px solid #a3bad9;
+    color:#222;
+    font:normal 25px tahoma, arial, helvetica, sans-serif;
+    cursor:wait;
+}
+.masked {
+    overflow: hidden !important;
+}
+.masked-relative {
+    position: relative !important;
+}
+.masked-hidden {
+    visibility: hidden !important;
+}
+
+
+.pagination-detail {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+div.pagination {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+table.table {
+    border: 1px solid #ddd;
+}
+
+.container-fluid {
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.date {
+	background:#fff url(/Content/Library/datetimepicker/skin/datePicker.gif) no-repeat right;
+}
+.datetime {
+	background:#fff url(/Content/Library/datetimepicker/skin/datePicker.gif) no-repeat right;
+}
+
+.dropzone{
+	border:1px solid transparent;
+}
+.dropzone.in{
+	border : 1px solid lawngreen;
+}
+.dropzone.hover{
+	border : 1px solid lawngreen;
+}
+.dropzone.fade {
+    -webkit-transition: all 0.3s ease-out;
+    -moz-transition: all 0.3s ease-out;
+    -ms-transition: all 0.3s ease-out;
+    -o-transition: all 0.3s ease-out;
+    transition: all 0.3s ease-out;
+    opacity: 1;
+}
+.preview-image{
+    max-width:400px;
+    max-height:300px;
+}
+.preview-image.small{
+    max-width:250px;
+    max-height: 200px;
+}
+.preview-image.tiny {
+    max-width: 150px;
+    max-height: 100px;
+}
+.fileinput-button{
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+}
+.fileinput-button input{
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    opacity: 0;
+    -ms-filter: 'alpha(opacity=0)';
+    font-size: 200px;
+    direction: ltr;
+    cursor: pointer;
+}
+
+
+
+.form-section {
+    padding: 0 1.4em 1.4em 1.4em !important;
+    margin: 0 0 1.5em 0 !important;
+    -webkit-box-shadow:  0px 0px 0px 0px #000;
+    box-shadow:  0px 0px 0px 0px #000;
+    border-bottom:none;
+    border: 1px groove #ddd !important;
+}
+
+.form-section legend{
+    font-size: 1.8em !important;
+    font-weight: bold !important;
+    text-align: left !important;
+    width:auto;
+    padding:0 10px;
+    border-bottom:none;
+}
+.form-section textarea{
+    height:100px;
+}
+
+.ui-autocomplete-loading {
+    background: white url("/Content/loading.gif") right center no-repeat;
+}
+
+
+.tag-area a {
+    border: #d5d5d5 solid 1px;
+    background: #fff;
+    height: 25px;
+    line-height: 25px;
+    padding: 0 8px;
+    display: inline-block;
+    margin-right: 5px;
+    margin-top: 5px;
+    color: black;
+}
+.tag-area span {
+    height: 25px;
+    line-height: 25px;
+    display: inline-block;
+}
+.tag-area i {
+    width: 10px;
+    cursor: pointer;
+    font-family: "黑体";
+    font-size: 18px;
+    line-height: 20px;
+    margin-left: 5px;
+    visibility: hidden;
+    font-size: 5px;
+    line-height: 5px;
+}
+.tag-area a:hover {
+    background: #b28850;
+    color: #fff;
+}
+.tag-area a:hover i {
+    visibility: visible;
+}
+.back-to-top {
+    padding: 4px 10px;
+    margin-top: 10px;
+    margin-left: 10px;
+    display: block;
+    font-weight: 500;
+    color: #999;
+}
