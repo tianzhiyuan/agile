@@ -60,10 +60,6 @@ namespace Agile.Common.DataConfig
         /// <typeparam name="TProperty">主键类型</typeparam>
         /// <param name="expr">主键</param>
         /// <param name="option">主键生成方式
-        /// （注：系统中所有主键都取自全局自增列Ids，部分主键来自外部系统，如账户中心
-        /// 所以 <see cref="DatabaseGeneratedOption.None"/> 表示Id取自外部系统
-        /// <see cref="DatabaseGeneratedOption.Identity"/>表示Id取自全局自增列
-        /// ）
         /// </param>
         public void HasKey<TProperty>(Expression<Func<TEntity, TProperty>> expr, DatabaseGeneratedOption option)
         {
@@ -202,18 +198,18 @@ namespace Agile.Common.DataConfig
         /// </summary>
         /// <param name="dbType">SqlServer数据库类型</param>
         /// <returns></returns>
-        public PropertyConfiguration MapTo(SqlDbType dbType)
+        public PropertyConfiguration MapTo(DbType dbType)
         {
             switch (Property.PropertyTypeCode)
             {
                 case TypeCode.Int32:
-                    if (new[] { SqlDbType.Int, SqlDbType.TinyInt, SqlDbType.SmallInt }.Contains(dbType))
+                    if (new[] { DbType.Int32, DbType.Int16, DbType.Byte }.Contains(dbType))
                     {
                         Property.DbType = dbType;
                     }
                     break;
                 case TypeCode.Decimal:
-                    if (new[] { SqlDbType.Decimal, SqlDbType.Money, SqlDbType.SmallMoney }.Contains(dbType))
+                    if (new[] { DbType.Decimal, DbType.Currency }.Contains(dbType))
                     {
                         Property.DbType = dbType;
                     }
@@ -237,23 +233,24 @@ namespace Agile.Common.DataConfig
 
         internal Property Property { get; private set; }
 
-        private static readonly IDictionary<Type, SqlDbType> mapping = new Dictionary<Type, SqlDbType>(){
-            {typeof(int?), SqlDbType.Int},
-            {typeof(string), SqlDbType.NVarChar},
-            {typeof(DateTime?), SqlDbType.DateTime},
-            {typeof(byte?), SqlDbType.TinyInt},
-            {typeof(long?), SqlDbType.BigInt},
-            {typeof(bool?), SqlDbType.Bit},
-            {typeof(short?), SqlDbType.SmallInt},
-            {typeof(decimal?), SqlDbType.Decimal},
+        private static readonly IDictionary<Type, DbType> mapping = new Dictionary<Type, DbType>(15)
+        {
+            {typeof(int?), DbType.Int32},
+            {typeof(string), DbType.String},
+            {typeof(DateTime?), DbType.DateTime},
+            {typeof(byte?), DbType.Byte},
+            {typeof(long?), DbType.Int64},
+            {typeof(bool?), DbType.Boolean},
+            {typeof(short?), DbType.Int16},
+            {typeof(decimal?), DbType.Decimal},
 
-            {typeof(int), SqlDbType.Int},
-            {typeof(DateTime), SqlDbType.DateTime},
-            {typeof(byte), SqlDbType.TinyInt},
-            {typeof(long), SqlDbType.BigInt},
-            {typeof(bool), SqlDbType.Bit},
-            {typeof(short), SqlDbType.SmallInt},
-            {typeof(decimal), SqlDbType.Decimal},
+            {typeof(int), DbType.Int32},
+            {typeof(DateTime), DbType.DateTime},
+            {typeof(byte), DbType.Byte},
+            {typeof(long), DbType.Int64},
+            {typeof(bool), DbType.Boolean},
+            {typeof(short), DbType.Int16},
+            {typeof(decimal), DbType.Decimal},
         };
 
         private TypeCode GetTypeCode(Type type)

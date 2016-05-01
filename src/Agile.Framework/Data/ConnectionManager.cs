@@ -37,8 +37,12 @@ namespace Agile.Framework.Data
         private readonly string _name;
 
 
-        public static ConnectionManager Get(string connectionName)
+        public static ConnectionManager Get(string connectionName = "")
         {
+            if (string.IsNullOrEmpty(connectionName))
+            {
+                connectionName = "Default";
+            }
             lock (LockObject)
             {
                 ConnectionManager mgr;

@@ -7,12 +7,14 @@ using System.Security;
 using System.Security.Permissions;
 using System.Security.Policy;
 using System.Web.Razor;
+using Agile.Common.Components;
 using Agile.Common.Exceptions;
 using Agile.Common.Security;
 using RazorEngine.Templating;
 
 namespace Agile.Framework.Email
 {
+    [Component]
 	public class RazorRenderer : ITemplateRenderer
 	{
 		public string Parse<T>(string template, T model, bool isHtml = true)

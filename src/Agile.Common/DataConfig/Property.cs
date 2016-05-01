@@ -25,7 +25,7 @@ namespace Agile.Common.DataConfig
         /// <summary>
         /// 列数据库类型
         /// </summary>
-        public SqlDbType DbType { get; set; }
+        public DbType DbType { get; set; }
         /// <summary>
         /// 属性类型
         /// </summary>
